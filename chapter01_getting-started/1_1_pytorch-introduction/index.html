@@ -23,7 +23,7 @@
       
         <meta name="lang:clipboard.copied" content="已复制">
       
-        <meta name="lang:search.language" content="ja">
+        <meta name="lang:search.language" content="zh">
       
         <meta name="lang:search.pipeline.stopwords" content="True">
       
@@ -195,7 +195,7 @@
     </div>
   
   <div class="md-source__repository">
-    GitHub
+    pytorch-tutorial
   </div>
 </a>
           </div>
@@ -242,7 +242,7 @@
     </div>
   
   <div class="md-source__repository">
-    GitHub
+    pytorch-tutorial
   </div>
 </a>
     </div>
@@ -523,10 +523,10 @@
               
                 
                 
-                <h1 id="pytorch">Pytorch 简介<a class="headerlink" href="#pytorch" title="Permanent link"></a></h1>
-<h2 id="pytorch_1">PyTorch的由来<a class="headerlink" href="#pytorch_1" title="Permanent link"></a></h2>
+                <h1 id="pytorch">Pytorch 简介<a class="headerlink" href="#pytorch" title="Permanent link">&para;</a></h1>
+<h2 id="pytorch_1">PyTorch的由来<a class="headerlink" href="#pytorch_1" title="Permanent link">&para;</a></h2>
 <p>很多人都会拿PyTorch和Google的Tensorflow进行比较，这个肯定是没有问题的，因为他们是最火的两个深度学习框架了。但是说到PyTorch，其实应该先说<a href="http://torch.ch">Torch</a>。</p>
-<h2 id="torch">Torch是什么？<a class="headerlink" href="#torch" title="Permanent link"></a></h2>
+<h2 id="torch">Torch是什么？<a class="headerlink" href="#torch" title="Permanent link">&para;</a></h2>
 <p><strong>Torch英译中：火炬</strong></p>
 <blockquote>
 <p>A Tensor library like Numpy, unlike Numpy it has strong GPU support. Lua is a wrapper for Torch (Yes! you need to have a good understanding of Lua), and for that you will need LuaRocks package manager.</p>
@@ -539,7 +539,7 @@ We still and will have continued engineering on Torch itself, and we have no imm
 <p>PyTorch和Torch使用包含所有相同性能的C库：TH, THC, THNN, THCUNN，并且它们将继续共享这些库。<br />
 这样的回答就很明确了，其实PyTorch和Torch都使用的是相同的底层，只是使用了不同的上层包装语言。<br />
 LUA虽然快，但是太小众了，所以才会有PyTorch的出现。<a href="https://discuss.pytorch.org/t/roadmap-for-torch-and-pytorch/38">[2]</a> </p>
-<h2 id="pytorch_2">重新介绍 PyTorch<a class="headerlink" href="#pytorch_2" title="Permanent link"></a></h2>
+<h2 id="pytorch_2">重新介绍 PyTorch<a class="headerlink" href="#pytorch_2" title="Permanent link">&para;</a></h2>
 <blockquote>
 <p>PyTorch is an open source machine learning library for Python, based on Torch, used for applications such as natural language processing. It is primarily developed by Facebook's artificial-intelligence research group, and Uber's "Pyro" software for probabilistic programming is built on it. </p>
 </blockquote>
@@ -554,10 +554,10 @@ LUA虽然快，但是太小众了，所以才会有PyTorch的出现。<a href="h
 * 具有强大的GPU加速的张量计算（如NumPy）
 * 包含自动求导系统的的深度神经网络  </p>
 <p>任何时候，你可以用你喜欢的Python包，如NumPy、SciPy 和 Cython去扩展PyTorch。<a href="https://github.com/pytorch/pytorch">[4]</a></p>
-<h2 id="pytorchtensorflow">对比PyTorch和Tensorflow<a class="headerlink" href="#pytorchtensorflow" title="Permanent link"></a></h2>
+<h2 id="pytorchtensorflow">对比PyTorch和Tensorflow<a class="headerlink" href="#pytorchtensorflow" title="Permanent link">&para;</a></h2>
 <p>没有好的框架，只有合适的框架， <a href="https://zhuanlan.zhihu.com/p/28636490">这篇知乎文章</a>有个简单的对比，2019年6月25日[机器之心]翻译的<a href="https://mp.weixin.qq.com/s/zS6KwLmx_cC3d14vas8DJA">PyTorch和Keras的最新对比</a>，所以这里就不详细再说了。
 并且技术是发展的，知乎上的对比也不是绝对的，比如Tensorflow在1.5版的时候就引入了Eager Execution机制实现了动态图，PyTorch的可视化,windows支持，沿维翻转张量等问题都已经不是问题了。</p>
-<h2 id="_1">再次总结<a class="headerlink" href="#_1" title="Permanent link"></a></h2>
+<h2 id="_1">再次总结<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
 <ul>
 <li>PyTorch算是相当简洁优雅且高效快速的框架</li>
 <li>设计追求最少的封装，尽量避免重复造轮子</li>
@@ -633,6 +633,13 @@ LUA虽然快，但是太小众了，所以才会有PyTorch的出现。<a href="h
           Material for MkDocs</a>
       </div>
       
+  <div class="md-footer-social">
+    <link rel="stylesheet" href="../../assets/fonts/font-awesome.css">
+    
+      <a href="https://github.com/becauseofAI" class="md-footer-social__link fa fa-github"></a>
+    
+  </div>
+
     </div>
   </div>
 </footer>
@@ -648,10 +655,6 @@ LUA虽然快，但是太小众了，所以才会有PyTorch的出现。<a href="h
           
             
               
-                <script src="../../assets/javascripts/lunr/tinyseg.js"></script>
-              
-              
-                <script src="../../assets/javascripts/lunr/lunr.ja.js"></script>
               
             
           
@@ -659,6 +662,12 @@ LUA虽然快，但是太小众了，所以才会有PyTorch的出现。<a href="h
         
       
       <script>app.initialize({version:"1.0.4",url:{base:"../.."}})</script>
+      
+        <script src="../../js/extra.js"></script>
+      
+        <script src="../../js/baidu-tongji.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML"></script>
       
     
   </body>
