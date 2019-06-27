@@ -1,0 +1,1077 @@
+
+
+
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      
+        <meta name="description" content="PyTorch Tutorial for Deep Learning Research and Product.">
+      
+      
+        <link rel="canonical" href="https://pytorch-tutorial.readthedocs.io/">
+      
+      
+        <meta name="author" content="becauseofAI">
+      
+      
+        <meta name="lang:clipboard.copy" content="复制">
+      
+        <meta name="lang:clipboard.copied" content="已复制">
+      
+        <meta name="lang:search.language" content="ja">
+      
+        <meta name="lang:search.pipeline.stopwords" content="True">
+      
+        <meta name="lang:search.pipeline.trimmer" content="True">
+      
+        <meta name="lang:search.result.none" content="没有找到符合条件的结果">
+      
+        <meta name="lang:search.result.one" content="找到 1 个符合条件的结果">
+      
+        <meta name="lang:search.result.other" content="# 个符合条件的结果">
+      
+        <meta name="lang:search.tokenizer" content="[\uff0c\u3002]+">
+      
+      <link rel="shortcut icon" href="assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.4.0">
+    
+    
+      
+        <title>PyTorch Tutorial</title>
+      
+    
+    
+      <link rel="stylesheet" href="assets/stylesheets/application.0284f74d.css">
+      
+        <link rel="stylesheet" href="assets/stylesheets/application-palette.01803549.css">
+      
+      
+        
+        
+        <meta name="theme-color" content="#546e7a">
+      
+    
+    
+      <script src="assets/javascripts/modernizr.74668098.js"></script>
+    
+    
+      
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700|Roboto+Mono&display=fallback">
+        <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
+      
+    
+    <link rel="stylesheet" href="assets/fonts/material-icons.css">
+    
+    
+      <link rel="stylesheet" href="css/extra.css">
+    
+    
+      
+        
+<script>
+  window.ga = window.ga || function() {
+    (ga.q = ga.q || []).push(arguments)
+  }
+  ga.l = +new Date
+  /* Setup integration and send page view */
+  ga("create", "UA-27795084-5", "mkdocs.org")
+  ga("set", "anonymizeIp", true)
+  ga("send", "pageview")
+  /* Register handler to log search on blur */
+  document.addEventListener("DOMContentLoaded", () => {
+    if (document.forms.search) {
+      var query = document.forms.search.query
+      query.addEventListener("blur", function() {
+        if (this.value) {
+          var path = document.location.pathname;
+          ga("send", "pageview", path + "?q=" + this.value)
+        }
+      })
+    }
+  })
+</script>
+<script async src="https://www.google-analytics.com/analytics.js"></script>
+      
+    
+    
+  </head>
+  
+    
+    
+    <body dir="ltr" data-md-color-primary="blue-grey" data-md-color-accent="pink">
+  
+    <svg class="md-svg">
+      <defs>
+        
+        
+          <svg xmlns="http://www.w3.org/2000/svg" width="416" height="448" viewBox="0 0 416 448" id="__github"><path fill="currentColor" d="M160 304q0 10-3.125 20.5t-10.75 19T128 352t-18.125-8.5-10.75-19T96 304t3.125-20.5 10.75-19T128 256t18.125 8.5 10.75 19T160 304zm160 0q0 10-3.125 20.5t-10.75 19T288 352t-18.125-8.5-10.75-19T256 304t3.125-20.5 10.75-19T288 256t18.125 8.5 10.75 19T320 304zm40 0q0-30-17.25-51T296 232q-10.25 0-48.75 5.25Q229.5 240 208 240t-39.25-2.75Q130.75 232 120 232q-29.5 0-46.75 21T56 304q0 22 8 38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0 37.25-1.75t35-7.375 30.5-15 20.25-25.75T360 304zm56-44q0 51.75-15.25 82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5T212 416q-19.5 0-35.5-.75t-36.875-3.125-38.125-7.5-34.25-12.875T37 371.5t-21.5-28.75Q0 312 0 260q0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25 30.875Q171.5 96 212 96q37 0 70 8 26.25-20.5 46.75-30.25T376 64q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34 99.5z"/></svg>
+        
+      </defs>
+    </svg>
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
+    
+      <a href="#pytorch-tutorial" tabindex="1" class="md-skip">
+        跳转至
+      </a>
+    
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <a href="https://pytorch-tutorial.readthedocs.io" title="PyTorch Tutorial" class="md-header-nav__button md-logo">
+          
+            <i class="md-icon"></i>
+          
+        </a>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="__drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+          
+            <span class="md-header-nav__topic">
+              PyTorch Tutorial
+            </span>
+            <span class="md-header-nav__topic">
+              
+                Introduction
+              
+            </span>
+          
+        </div>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+          <label class="md-icon md-icon--search md-header-nav__button" for="__search"></label>
+          
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query" data-md-state="active">
+      <label class="md-icon md-search__icon" for="__search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset" tabindex="-1">
+        &#xE5CD;
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta">
+            键入以开始搜索
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+        
+      </div>
+      
+        <div class="md-flex__cell md-flex__cell--shrink">
+          <div class="md-header-nav__source">
+            
+
+
+  
+
+<a href="https://github.com/becauseofAI/pytorch-tutorial/" title="前往 Github 仓库" class="md-source" data-md-source="github">
+  
+    <div class="md-source__icon">
+      <svg viewBox="0 0 24 24" width="24" height="24">
+        <use xlink:href="#__github" width="24" height="24"></use>
+      </svg>
+    </div>
+  
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+          </div>
+        </div>
+      
+    </div>
+  </nav>
+</header>
+    
+    <div class="md-container">
+      
+        
+      
+      
+      <main class="md-main">
+        <div class="md-main__inner md-grid" data-md-component="container">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="__drawer">
+    <a href="https://pytorch-tutorial.readthedocs.io" title="PyTorch Tutorial" class="md-nav__button md-logo">
+      
+        <i class="md-icon"></i>
+      
+    </a>
+    PyTorch Tutorial
+  </label>
+  
+    <div class="md-nav__source">
+      
+
+
+  
+
+<a href="https://github.com/becauseofAI/pytorch-tutorial/" title="前往 Github 仓库" class="md-source" data-md-source="github">
+  
+    <div class="md-source__icon">
+      <svg viewBox="0 0 24 24" width="24" height="24">
+        <use xlink:href="#__github" width="24" height="24"></use>
+      </svg>
+    </div>
+  
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Introduction
+      </label>
+    
+    <a href="." title="Introduction" class="md-nav__link md-nav__link--active">
+      Introduction
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">目录</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview" title="Overview" class="md-nav__link">
+    Overview
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#host-anywhere" title="Host anywhere" class="md-nav__link">
+    Host anywhere
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#great-themes-available" title="Great themes available" class="md-nav__link">
+    Great themes available
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#preview-your-site-as-you-work" title="Preview your site as you work" class="md-nav__link">
+    Preview your site as you work
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#easy-to-customize" title="Easy to customize" class="md-nav__link">
+    Easy to customize
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#installation" title="Installation" class="md-nav__link">
+    Installation
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#install-with-a-package-manager" title="Install with a Package Manager" class="md-nav__link">
+    Install with a Package Manager
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#manual-installation" title="Manual Installation" class="md-nav__link">
+    Manual Installation
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#installing-python" title="Installing Python" class="md-nav__link">
+    Installing Python
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#installing-pip" title="Installing pip" class="md-nav__link">
+    Installing pip
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#installing-mkdocs" title="Installing MkDocs" class="md-nav__link">
+    Installing MkDocs
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#getting-started" title="Getting Started" class="md-nav__link">
+    Getting Started
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#adding-pages" title="Adding pages" class="md-nav__link">
+    Adding pages
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#theming-our-documentation" title="Theming our documentation" class="md-nav__link">
+    Theming our documentation
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#changing-the-favicon-icon" title="Changing the Favicon Icon" class="md-nav__link">
+    Changing the Favicon Icon
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#building-the-site" title="Building the site" class="md-nav__link">
+    Building the site
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#other-commands-and-options" title="Other Commands and Options" class="md-nav__link">
+    Other Commands and Options
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#deploying" title="Deploying" class="md-nav__link">
+    Deploying
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#getting-help" title="Getting help" class="md-nav__link">
+    Getting help
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2">
+    
+    <label class="md-nav__link" for="nav-2">
+      Tutorials
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-2">
+        Tutorials
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2-1" type="checkbox" id="nav-2-1">
+    
+    <label class="md-nav__link" for="nav-2-1">
+      Ghapter01 Getting Started
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-2-1">
+        Ghapter01 Getting Started
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="chapter01_getting-started/1_1_pytorch-introduction/" title="1.1 PyTorch Tntroduction" class="md-nav__link">
+      1.1 PyTorch Tntroduction
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="chapter01_getting-started/1_3_deep-learning-with-pytorch-60-minute-blitz/" title="1.3 PyTorch 60 Minute Blitz" class="md-nav__link">
+      1.3 PyTorch 60 Minute Blitz
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2-2" type="checkbox" id="nav-2-2">
+    
+    <label class="md-nav__link" for="nav-2-2">
+      Ghapter02 Basics
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-2-2">
+        Ghapter02 Basics
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="chapter02_basics/2_1_pytorch-basics-tensor/" title="2.1 Tensor" class="md-nav__link">
+      2.1 Tensor
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="about/" title="About" class="md-nav__link">
+      About
+    </a>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">目录</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview" title="Overview" class="md-nav__link">
+    Overview
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#host-anywhere" title="Host anywhere" class="md-nav__link">
+    Host anywhere
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#great-themes-available" title="Great themes available" class="md-nav__link">
+    Great themes available
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#preview-your-site-as-you-work" title="Preview your site as you work" class="md-nav__link">
+    Preview your site as you work
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#easy-to-customize" title="Easy to customize" class="md-nav__link">
+    Easy to customize
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#installation" title="Installation" class="md-nav__link">
+    Installation
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#install-with-a-package-manager" title="Install with a Package Manager" class="md-nav__link">
+    Install with a Package Manager
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#manual-installation" title="Manual Installation" class="md-nav__link">
+    Manual Installation
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#installing-python" title="Installing Python" class="md-nav__link">
+    Installing Python
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#installing-pip" title="Installing pip" class="md-nav__link">
+    Installing pip
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#installing-mkdocs" title="Installing MkDocs" class="md-nav__link">
+    Installing MkDocs
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#getting-started" title="Getting Started" class="md-nav__link">
+    Getting Started
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#adding-pages" title="Adding pages" class="md-nav__link">
+    Adding pages
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#theming-our-documentation" title="Theming our documentation" class="md-nav__link">
+    Theming our documentation
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#changing-the-favicon-icon" title="Changing the Favicon Icon" class="md-nav__link">
+    Changing the Favicon Icon
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#building-the-site" title="Building the site" class="md-nav__link">
+    Building the site
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#other-commands-and-options" title="Other Commands and Options" class="md-nav__link">
+    Other Commands and Options
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#deploying" title="Deploying" class="md-nav__link">
+    Deploying
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#getting-help" title="Getting help" class="md-nav__link">
+    Getting help
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                <h1 id="pytorch-tutorial">Pytorch Tutorial<a class="headerlink" href="#pytorch-tutorial" title="Permanent link"></a></h1>
+<p>PyTorch Tutorial for Deep Learning Research and Product.</p>
+<hr />
+<h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link"></a></h2>
+<p>MkDocs is a <strong>fast</strong>, <strong>simple</strong> and <strong>downright gorgeous</strong> static site
+generator that's geared towards building project documentation. Documentation
+source files are written in Markdown, and configured with a single YAML
+configuration file.</p>
+<h3 id="host-anywhere">Host anywhere<a class="headerlink" href="#host-anywhere" title="Permanent link"></a></h3>
+<p>MkDocs builds completely static HTML sites that you can host on GitHub pages,
+Amazon S3, or <a href="user-guide/deploying-your-docs/">anywhere</a> else you choose.</p>
+<h3 id="great-themes-available">Great themes available<a class="headerlink" href="#great-themes-available" title="Permanent link"></a></h3>
+<p>There's a stack of good looking themes available for MkDocs. Choose between
+the built in themes: <a href="user-guide/styling-your-docs/#mkdocs">mkdocs</a> and <a href="user-guide/styling-your-docs/#readthedocs">readthedocs</a>, select one of the 3rd
+party themes in the <a href="https://github.com/mkdocs/mkdocs/wiki/MkDocs-Themes">MkDocs wiki</a>, or <a href="user-guide/custom-themes/">build your own</a>.</p>
+<h3 id="preview-your-site-as-you-work">Preview your site as you work<a class="headerlink" href="#preview-your-site-as-you-work" title="Permanent link"></a></h3>
+<p>The built-in dev-server allows you to preview your documentation as you're
+writing it. It will even auto-reload and refresh your browser whenever you save
+your changes.</p>
+<h3 id="easy-to-customize">Easy to customize<a class="headerlink" href="#easy-to-customize" title="Permanent link"></a></h3>
+<p>Get your project documentation looking just the way you want it by customizing
+the theme.</p>
+<hr />
+<h2 id="installation">Installation<a class="headerlink" href="#installation" title="Permanent link"></a></h2>
+<h3 id="install-with-a-package-manager">Install with a Package Manager<a class="headerlink" href="#install-with-a-package-manager" title="Permanent link"></a></h3>
+<p>If you have and use a package manager (such as <a href="https://help.ubuntu.com/community/AptGet/Howto">apt-get</a>, <a href="https://dnf.readthedocs.io/en/latest/index.html">dnf</a>, <a href="https://brew.sh/">homebrew</a>,
+<a href="http://yum.baseurl.org/">yum</a>, <a href="https://chocolatey.org/">chocolatey</a>, etc.) to install packages on your system, then you may
+want to search for a "MkDocs" package and, if a recent version is available,
+install it with your package manager (check your system's documentation for
+details). That's it, you're done! Skip down to <a href="#getting-started">Getting Started</a>.</p>
+<p>If your package manager does not have a recent "MkDocs" package, you can still
+use your package manager to install "Python" and "pip". Then you can use pip to
+<a href="#installing-mkdocs">install MkDocs</a>.</p>
+<h3 id="manual-installation">Manual Installation<a class="headerlink" href="#manual-installation" title="Permanent link"></a></h3>
+<p>In order to manually install MkDocs you'll need <a href="https://www.python.org/">Python</a> installed on your
+system, as well as the Python package manager, <a href="https://pip.readthedocs.io/en/stable/installing/">pip</a>. You can check if you have
+these already installed from the command line:</p>
+<pre><code class="bash">$ python --version
+Python 2.7.14
+$ pip --version
+pip 18.1 from /usr/local/lib/python2.7/site-packages/pip (python 2.7)
+</code></pre>
+
+<p>MkDocs supports Python versions 2.7.9+, 3.4, 3.5, 3.6, 3.7, and pypy.</p>
+<h4 id="installing-python">Installing Python<a class="headerlink" href="#installing-python" title="Permanent link"></a></h4>
+<p>Install <a href="https://www.python.org/">Python</a> by downloading an installer appropriate for your system from
+<a href="https://www.python.org/downloads/">python.org</a> and running it.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you are installing Python on Windows, be sure to check the box to have
+Python added to your PATH if the installer offers such an option (it's
+normally off by default).</p>
+<p><img alt="Add Python to PATH" src="img/win-py-install.png" /></p>
+</div>
+<h4 id="installing-pip">Installing pip<a class="headerlink" href="#installing-pip" title="Permanent link"></a></h4>
+<p>If you're using a recent version of Python, the Python package manager, <a href="https://pip.readthedocs.io/en/stable/installing/">pip</a>,
+is most likely installed by default. However, you may need to upgrade pip to the
+lasted version:</p>
+<pre><code class="bash">pip install --upgrade pip
+</code></pre>
+
+<p>If you need to install <a href="https://pip.readthedocs.io/en/stable/installing/">pip</a> for the first time, download <a href="https://bootstrap.pypa.io/get-pip.py">get-pip.py</a>.
+Then run the following command to install it:</p>
+<pre><code class="bash">python get-pip.py
+</code></pre>
+
+<h4 id="installing-mkdocs">Installing MkDocs<a class="headerlink" href="#installing-mkdocs" title="Permanent link"></a></h4>
+<p>Install the <code>mkdocs</code> package using pip:</p>
+<pre><code class="bash">pip install mkdocs
+</code></pre>
+
+<p>You should now have the <code>mkdocs</code> command installed on your system. Run <code>mkdocs
+--version</code> to check that everything worked okay.</p>
+<pre><code class="bash">$ mkdocs --version
+mkdocs, version 0.15.3
+</code></pre>
+
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you would like manpages installed for MkDocs, the <a href="https://github.com/click-contrib/click-man">click-man</a> tool can
+generate and install them for you. Simply run the following two commands:</p>
+<pre><code>pip install click-man
+click-man --target path/to/man/pages mkdocs
+</code></pre>
+<p>See the <a href="https://github.com/click-contrib/click-man#automatic-man-page-installation-with-setuptools-and-pip">click-man documentation</a> for an explanation of why manpages are
+not automatically generated and installed by pip.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you are using Windows, some of the above commands may not work
+out-of-the-box.</p>
+<p>A quick solution may be to preface every Python command with <code>python -m</code>
+like this:</p>
+<pre><code>python -m pip install mkdocs
+python -m mkdocs
+</code></pre>
+<p>For a more permanent solution, you may need to edit your <code>PATH</code> environment
+variable to include the <code>Scripts</code> directory of your Python installation.
+Recent versions of Python include a script to do this for you. Navigate to
+your Python installation directory (for example <code>C:\Python34\</code>), open the
+<code>Tools</code>, then <code>Scripts</code> folder, and run the <code>win_add2path.py</code> file by double
+clicking on it. Alternatively, you can <a href="https://svn.python.org/projects/python/trunk/Tools/scripts/win_add2path.py">download</a> the script and run it
+(<code>python win_add2path.py</code>).</p>
+</div>
+<hr />
+<h2 id="getting-started">Getting Started<a class="headerlink" href="#getting-started" title="Permanent link"></a></h2>
+<p>Getting started is super easy.</p>
+<pre><code class="bash">mkdocs new my-project
+cd my-project
+</code></pre>
+
+<p>Take a moment to review the initial project that has been created for you.</p>
+<p><img alt="The initial MkDocs layout" src="img/initial-layout.png" /></p>
+<p>There's a single configuration file named <code>mkdocs.yml</code>, and a folder named
+<code>docs</code> that will contain your documentation source files. Right now the <code>docs</code>
+folder just contains a single documentation page, named <code>index.md</code>.</p>
+<p>MkDocs comes with a built-in dev-server that lets you preview your documentation
+as you work on it. Make sure you're in the same directory as the <code>mkdocs.yml</code>
+configuration file, and then start the server by running the <code>mkdocs serve</code>
+command:</p>
+<pre><code class="bash">$ mkdocs serve
+INFO    -  Building documentation...
+INFO    -  Cleaning site directory
+[I 160402 15:50:43 server:271] Serving on http://127.0.0.1:8000
+[I 160402 15:50:43 handlers:58] Start watching changes
+[I 160402 15:50:43 handlers:60] Start detecting changes
+</code></pre>
+
+<p>Open up <code>http://127.0.0.1:8000/</code> in your browser, and you'll see the default
+home page being displayed:</p>
+<p><img alt="The MkDocs live server" src="img/screenshot.png" /></p>
+<p>The dev-server also supports auto-reloading, and will rebuild your documentation
+whenever anything in the configuration file, documentation directory, or theme
+directory changes.</p>
+<p>Open the <code>docs/index.md</code> document in your text editor of choice, change the
+initial heading to <code>MkLorum</code>, and save your changes. Your browser will
+auto-reload and you should see your updated documentation immediately.</p>
+<p>Now try editing the configuration file: <code>mkdocs.yml</code>. Change the
+<a href="user-guide/configuration/#site_name"><code>site_name</code></a> setting to <code>MkLorum</code> and save the file.</p>
+<pre><code class="yaml">site_name: MkLorum
+</code></pre>
+
+<p>Your browser should immediately reload, and you'll see your new site name take
+effect.</p>
+<p><img alt="The site_name setting" src="img/site-name.png" /></p>
+<h2 id="adding-pages">Adding pages<a class="headerlink" href="#adding-pages" title="Permanent link"></a></h2>
+<p>Now add a second page to your documentation:</p>
+<pre><code class="bash">curl 'https://jaspervdj.be/lorem-markdownum/markdown.txt' &gt; docs/about.md
+</code></pre>
+
+<p>As our documentation site will include some navigation headers, you may want to
+edit the configuration file and add some information about the order, title, and
+nesting of each page in the navigation header by adding a <a href="user-guide/configuration/#nav"><code>nav</code></a>
+setting:</p>
+<pre><code class="yaml">site_name: MkLorum
+nav:
+    - Home: index.md
+    - About: about.md
+</code></pre>
+
+<p>Save your changes and you'll now see a navigation bar with <code>Home</code> and <code>About</code>
+items on the left as well as <code>Search</code>, <code>Previous</code>, and <code>Next</code> items on the
+right.</p>
+<p><img alt="Screenshot" src="img/multipage.png" /></p>
+<p>Try the menu items and navigate back and forth between pages. Then click on
+<code>Search</code>. A search dialog will appear, allowing you to search for any text on
+any page. Notice that the search results include every occurrence of the search
+term on the site and links directly to the section of the page in which the
+search term appears. You get all of that with no effort or configuration on your
+part!</p>
+<p><img alt="Screenshot" src="img/search.png" /></p>
+<h2 id="theming-our-documentation">Theming our documentation<a class="headerlink" href="#theming-our-documentation" title="Permanent link"></a></h2>
+<p>Now change the configuration file to alter how the documentation is displayed by
+changing the theme. Edit the <code>mkdocs.yml</code> file and add a <a href="user-guide/configuration/#theme"><code>theme</code></a> setting:</p>
+<pre><code class="yaml">site_name: MkLorum
+nav:
+    - Home: index.md
+    - About: about.md
+theme: readthedocs
+</code></pre>
+
+<p>Save your changes, and you'll see the ReadTheDocs theme being used.</p>
+<p><img alt="Screenshot" src="img/readthedocs.png" /></p>
+<h2 id="changing-the-favicon-icon">Changing the Favicon Icon<a class="headerlink" href="#changing-the-favicon-icon" title="Permanent link"></a></h2>
+<p>By default, MkDocs uses the <a href="/img/favicon.ico">MkDocs favicon</a> icon. To use a different icon, create
+an <code>img</code> subdirectory in your <code>docs_dir</code> and copy your custom <code>favicon.ico</code> file
+to that directory. MkDocs will automatically detect and use that file as your
+favicon icon.</p>
+<h2 id="building-the-site">Building the site<a class="headerlink" href="#building-the-site" title="Permanent link"></a></h2>
+<p>That's looking good. You're ready to deploy the first pass of your <code>MkLorum</code>
+documentation. First build the documentation:</p>
+<pre><code class="bash">mkdocs build
+</code></pre>
+
+<p>This will create a new directory, named <code>site</code>. Take a look inside the
+directory:</p>
+<pre><code class="bash">$ ls site
+about  fonts  index.html  license  search.html
+css    img    js          mkdocs   sitemap.xml
+</code></pre>
+
+<p>Notice that your source documentation has been output as two HTML files named
+<code>index.html</code> and <code>about/index.html</code>. You also have various other media that's
+been copied into the <code>site</code> directory as part of the documentation theme. You
+even have a <code>sitemap.xml</code> file and <code>mkdocs/search_index.json</code>.</p>
+<p>If you're using source code control such as <code>git</code> you probably don't want to
+check your documentation builds into the repository. Add a line containing
+<code>site/</code> to your <code>.gitignore</code> file.</p>
+<pre><code class="bash">echo &quot;site/&quot; &gt;&gt; .gitignore
+</code></pre>
+
+<p>If you're using another source code control tool you'll want to check its
+documentation on how to ignore specific directories.</p>
+<p>After some time, files may be removed from the documentation but they will still
+reside in the <code>site</code> directory. To remove those stale files, just run <code>mkdocs</code>
+with the <code>--clean</code> switch.</p>
+<pre><code class="bash">mkdocs build --clean
+</code></pre>
+
+<h2 id="other-commands-and-options">Other Commands and Options<a class="headerlink" href="#other-commands-and-options" title="Permanent link"></a></h2>
+<p>There are various other commands and options available. For a complete list of
+commands, use the <code>--help</code> flag:</p>
+<pre><code class="bash">mkdocs --help
+</code></pre>
+
+<p>To view a list of options available on a given command, use the <code>--help</code> flag
+with that command. For example, to get a list of all options available for the
+<code>build</code> command run the following:</p>
+<pre><code class="bash">mkdocs build --help
+</code></pre>
+
+<h2 id="deploying">Deploying<a class="headerlink" href="#deploying" title="Permanent link"></a></h2>
+<p>The documentation site that you just built only uses static files so you'll be
+able to host it from pretty much anywhere. <a href="https://help.github.com/articles/creating-project-pages-manually/">GitHub project pages</a> and <a href="https://docs.aws.amazon.com/AmazonS3/latest/dev/WebsiteHosting.html">Amazon
+S3</a> may be good hosting options, depending upon your needs. Upload the contents
+of the entire <code>site</code> directory to wherever you're hosting your website from and
+you're done. For specific instructions on a number of common hosts, see the
+<a href="user-guide/deploying-your-docs/">Deploying your Docs</a> page.</p>
+<h2 id="getting-help">Getting help<a class="headerlink" href="#getting-help" title="Permanent link"></a></h2>
+<p>To get help with MkDocs, please use the <a href="https://groups.google.com/forum/#!forum/mkdocs">discussion group</a>, <a href="https://github.com/mkdocs/mkdocs/issues">GitHub issues</a> or
+the MkDocs IRC channel <code>#mkdocs</code> on freenode.</p>
+                
+                  
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid">
+        
+        
+          <a href="chapter01_getting-started/1_1_pytorch-introduction/" title="1.1 PyTorch Tntroduction" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  下一页
+                </span>
+                1.1 PyTorch Tntroduction
+              </span>
+            </div>
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+          <div class="md-footer-copyright__highlight">
+            Copyright &copy; 2019 <a href="https://github.com/becauseofAI">becauseofAI</a>, Maintained by the <a href="https://github.com/becauseofAI">becauseofAI</a>.
+          </div>
+        
+        powered by
+        <a href="https://www.mkdocs.org">MkDocs</a>
+        and
+        <a href="https://squidfunk.github.io/mkdocs-material/">
+          Material for MkDocs</a>
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="assets/javascripts/application.245445c6.js"></script>
+      
+        
+        
+          
+          <script src="assets/javascripts/lunr/lunr.stemmer.support.js"></script>
+          
+            
+              
+                <script src="assets/javascripts/lunr/tinyseg.js"></script>
+              
+              
+                <script src="assets/javascripts/lunr/lunr.ja.js"></script>
+              
+            
+          
+          
+        
+      
+      <script>app.initialize({version:"1.0.4",url:{base:"."}})</script>
+      
+    
+  </body>
+</html>
