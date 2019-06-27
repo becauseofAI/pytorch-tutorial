@@ -9,4 +9,4 @@ PyTorch Tutorial for Deep Learning Research and Product.
 [pytorch cn](https://pytorch-cn.readthedocs.io/zh/latest/ "PyTorch 中文文档")  
 [pytorch book](https://github.com/chenyuntc/pytorch-book "深度学习框架PyTorch：入门与实践")  
 [pytorch tutorial](https://www.pytorchtutorial.com/ "PyTorch 中文网")  
-[pytorch china](http://pytorchchina.com/ "Pytorch 中国")  
+[pytorch china](http://pytorchchina.com/ "PyTorch 中国")  
