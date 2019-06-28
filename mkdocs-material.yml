@@ -8,7 +8,7 @@ edit_uri: ""
 repo_name: 'pytorch-tutorial'
 
 theme:
-  name: mkdocs # material
+  name: material
   palette:
     primary: 'Blue Grey'
     accent: 'Pink'
