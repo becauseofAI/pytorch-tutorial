@@ -5,7 +5,7 @@ site_author: becauseofAI
 
 repo_url: https://github.com/becauseofAI/pytorch-tutorial/
 edit_uri: ""
-repo_name: 'pytorch-tutorial'
+# repo_name: 'pytorch-tutorial'
 
 theme:
     name: mkdocs
@@ -23,13 +23,8 @@ markdown_extensions:
     #     user: mkdocs
     #     repo: mkdocs
 
-extra_javascript:
-  - './js/extra.js'
-  - './js/baidu-tongji.js'
-  - 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML'
-
 extra_css:
-    - './css/extra.css'
+    - '../css/extra.css'
 
 copyright: Copyright &copy; 2019 <a href="https://github.com/becauseofAI">becauseofAI</a>, Maintained by the <a href="https://github.com/becauseofAI">becauseofAI</a>.
 google_analytics: ['UA-27795084-5', 'mkdocs.org']
