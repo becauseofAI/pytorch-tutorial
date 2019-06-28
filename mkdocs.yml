@@ -1,5 +1,5 @@
 site_name: PyTorch Tutorial
-site_url: https://becauseofAI.github.io/pytorch-tutorial/
+site_url: https://pytorch-tutorial.readthedocs.io
 site_description: PyTorch Tutorial for Deep Learning Research and Product.
 site_author: becauseofAI
 
@@ -8,54 +8,20 @@ edit_uri: ""
 repo_name: 'pytorch-tutorial'
 
 theme:
-  name: mkdocs # material
-  palette:
-    primary: 'Blue Grey'
-    accent: 'Pink'
-  feature:
-    tabs: false
-  #font:
-    #text: 'Ubuntu'
-    #code: 'Ubuntu Mono'
-  language: 'zh'
-
-extra:
-  social:
-    - type: github
-      link: https://github.com/becauseofAI
-  search:
-    language: 'zh'
+    name: mkdocs
+    highlightjs: true
+    hljs_languages:
+        - yaml
+        - django
 
 markdown_extensions:
-  - admonition
-  - codehilite:
-      guess_lang: false
-      linenums: false
-  - toc:
-      permalink: true
-  - footnotes
-  - meta
-  - def_list
-  - pymdownx.arithmatex
-  - pymdownx.betterem:
-      smart_enable: all
-  - pymdownx.caret
-  - pymdownx.critic
-  - pymdownx.details
-  - pymdownx.emoji:
-      emoji_generator: !!python/name:pymdownx.emoji.to_png
-      #emoji_generator: !!python/name:pymdownx.emoji.to_svg
-      #emoji_generator: !!python/name:pymdownx.emoji.to_png_sprite
-      #emoji_generator: !!python/name:pymdownx.emoji.to_svg_sprite
-      #emoji_generator: !!python/name:pymdownx.emoji.to_awesome
-      #emoji_generator: !!python/name:pymdownx.emoji.to_alt
-  - pymdownx.inlinehilite
-  - pymdownx.magiclink
-  - pymdownx.mark
-  - pymdownx.smartsymbols
-  - pymdownx.superfences
-  - pymdownx.tasklist
-  - pymdownx.tilde
+    - toc:
+        permalink: 
+    - admonition
+    - def_list
+    # - mdx_gh_links:
+    #     user: mkdocs
+    #     repo: mkdocs
 
 extra_javascript:
   - './js/extra.js'
@@ -74,11 +40,8 @@ plugins:
 nav:
     - Introduction: index.md
     - Tutorials:
-        - Ghapter01 Getting Started: 
-          - 1.1 PyTorch Tntroduction: chapter01_getting-started/1_1_pytorch-introduction.md
-          - 1.3 PyTorch 60 Minute Blitz: chapter01_getting-started/1_3_deep-learning-with-pytorch-60-minute-blitz.md
-        - Ghapter02 Basics: 
-          - 2.1 Tensor: chapter02_basics/2_1_pytorch-basics-tensor.md
+        - Ghapter01 Getting Started: chapter01_getting-started/README.md
+        - Ghapter02 Basics: chapter02_basics/README.md
     - About: about.md
         # - Release Notes: about/release-notes.md
         # - Contributing: about/contributing.md
