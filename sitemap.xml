@@ -2,27 +2,47 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
      <loc>https://becauseofAI.github.io/pytorch-tutorial/</loc>
-     <lastmod>2019-06-28</lastmod>
+     <lastmod>2019-07-01</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>https://becauseofAI.github.io/pytorch-tutorial/chapter01_getting-started/1_1_pytorch-introduction/</loc>
-     <lastmod>2019-06-28</lastmod>
+     <loc>https://becauseofAI.github.io/pytorch-tutorial/tutorial/chapter01_getting-started/1_1_pytorch-introduction/</loc>
+     <lastmod>2019-07-01</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>https://becauseofAI.github.io/pytorch-tutorial/chapter01_getting-started/1_3_deep-learning-with-pytorch-60-minute-blitz/</loc>
-     <lastmod>2019-06-28</lastmod>
+     <loc>https://becauseofAI.github.io/pytorch-tutorial/tutorial/chapter01_getting-started/1_3_1_tensor_tutorial/</loc>
+     <lastmod>2019-07-01</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>https://becauseofAI.github.io/pytorch-tutorial/chapter02_basics/2_1_pytorch-basics-tensor/</loc>
-     <lastmod>2019-06-28</lastmod>
+     <loc>https://becauseofAI.github.io/pytorch-tutorial/tutorial/chapter01_getting-started/1_3_2_autograd_tutorial/</loc>
+     <lastmod>2019-07-01</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    <url>
+     <loc>https://becauseofAI.github.io/pytorch-tutorial/tutorial/chapter01_getting-started/1_3_3_neural_networks_tutorial/</loc>
+     <lastmod>2019-07-01</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    <url>
+     <loc>https://becauseofAI.github.io/pytorch-tutorial/tutorial/chapter01_getting-started/1_3_4_cifar10_tutorial/</loc>
+     <lastmod>2019-07-01</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    <url>
+     <loc>https://becauseofAI.github.io/pytorch-tutorial/tutorial/chapter01_getting-started/1_3_5_data_parallel_tutorial/</loc>
+     <lastmod>2019-07-01</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    <url>
+     <loc>https://becauseofAI.github.io/pytorch-tutorial/tutorial/chapter02_basics/2_1_pytorch-basics-tensor/</loc>
+     <lastmod>2019-07-01</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://becauseofAI.github.io/pytorch-tutorial/about/</loc>
-     <lastmod>2019-06-28</lastmod>
+     <lastmod>2019-07-01</lastmod>
      <changefreq>daily</changefreq>
     </url>
 </urlset>
