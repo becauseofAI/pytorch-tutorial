@@ -1,0 +1,1971 @@
+
+
+
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      
+        <meta name="description" content="PyTorch Tutorial for Deep Learning Research and Product.">
+      
+      
+        <link rel="canonical" href="https://becauseofAI.github.io/pytorch-tutorial/tutorial/chapter02_basics/2_1_2_pytorch-basics-autograd/">
+      
+      
+        <meta name="author" content="becauseofAI">
+      
+      
+        <meta name="lang:clipboard.copy" content="复制">
+      
+        <meta name="lang:clipboard.copied" content="已复制">
+      
+        <meta name="lang:search.language" content="ja">
+      
+        <meta name="lang:search.pipeline.stopwords" content="True">
+      
+        <meta name="lang:search.pipeline.trimmer" content="True">
+      
+        <meta name="lang:search.result.none" content="没有找到符合条件的结果">
+      
+        <meta name="lang:search.result.one" content="找到 1 个符合条件的结果">
+      
+        <meta name="lang:search.result.other" content="# 个符合条件的结果">
+      
+        <meta name="lang:search.tokenizer" content="[\uff0c\u3002]+">
+      
+      <link rel="shortcut icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.4.0">
+    
+    
+      
+        <title>2.1.2 AutoGrad - PyTorch Tutorial</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/application.0284f74d.css">
+      
+        <link rel="stylesheet" href="../../../assets/stylesheets/application-palette.01803549.css">
+      
+      
+        
+        
+        <meta name="theme-color" content="#ef5350">
+      
+    
+    
+      <script src="../../../assets/javascripts/modernizr.74668098.js"></script>
+    
+    
+      
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700|Roboto+Mono&display=fallback">
+        <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
+      
+    
+    <link rel="stylesheet" href="../../../assets/fonts/material-icons.css">
+    
+    
+      <link rel="stylesheet" href="../../../css/extra.css">
+    
+    
+      
+        
+<script>
+  window.ga = window.ga || function() {
+    (ga.q = ga.q || []).push(arguments)
+  }
+  ga.l = +new Date
+  /* Setup integration and send page view */
+  ga("create", "UA-27795084-5", "mkdocs.org")
+  ga("set", "anonymizeIp", true)
+  ga("send", "pageview")
+  /* Register handler to log search on blur */
+  document.addEventListener("DOMContentLoaded", () => {
+    if (document.forms.search) {
+      var query = document.forms.search.query
+      query.addEventListener("blur", function() {
+        if (this.value) {
+          var path = document.location.pathname;
+          ga("send", "pageview", path + "?q=" + this.value)
+        }
+      })
+    }
+  })
+</script>
+<script async src="https://www.google-analytics.com/analytics.js"></script>
+      
+    
+    
+  </head>
+  
+    
+    
+    <body dir="ltr" data-md-color-primary="red" data-md-color-accent="indigo">
+  
+    <svg class="md-svg">
+      <defs>
+        
+        
+          <svg xmlns="http://www.w3.org/2000/svg" width="416" height="448" viewBox="0 0 416 448" id="__github"><path fill="currentColor" d="M160 304q0 10-3.125 20.5t-10.75 19T128 352t-18.125-8.5-10.75-19T96 304t3.125-20.5 10.75-19T128 256t18.125 8.5 10.75 19T160 304zm160 0q0 10-3.125 20.5t-10.75 19T288 352t-18.125-8.5-10.75-19T256 304t3.125-20.5 10.75-19T288 256t18.125 8.5 10.75 19T320 304zm40 0q0-30-17.25-51T296 232q-10.25 0-48.75 5.25Q229.5 240 208 240t-39.25-2.75Q130.75 232 120 232q-29.5 0-46.75 21T56 304q0 22 8 38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0 37.25-1.75t35-7.375 30.5-15 20.25-25.75T360 304zm56-44q0 51.75-15.25 82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5T212 416q-19.5 0-35.5-.75t-36.875-3.125-38.125-7.5-34.25-12.875T37 371.5t-21.5-28.75Q0 312 0 260q0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25 30.875Q171.5 96 212 96q37 0 70 8 26.25-20.5 46.75-30.25T376 64q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34 99.5z"/></svg>
+        
+      </defs>
+    </svg>
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
+    
+      <a href="#pytorch" tabindex="1" class="md-skip">
+        跳转至
+      </a>
+    
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <a href="https://becauseofAI.github.io/pytorch-tutorial/" title="PyTorch Tutorial" class="md-header-nav__button md-logo">
+          
+            <i class="md-icon"></i>
+          
+        </a>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="__drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+          
+            <span class="md-header-nav__topic">
+              PyTorch Tutorial
+            </span>
+            <span class="md-header-nav__topic">
+              
+                2.1.2 AutoGrad
+              
+            </span>
+          
+        </div>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+          <label class="md-icon md-icon--search md-header-nav__button" for="__search"></label>
+          
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query" data-md-state="active">
+      <label class="md-icon md-search__icon" for="__search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset" tabindex="-1">
+        &#xE5CD;
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta">
+            键入以开始搜索
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+        
+      </div>
+      
+        <div class="md-flex__cell md-flex__cell--shrink">
+          <div class="md-header-nav__source">
+            
+
+
+  
+
+<a href="https://github.com/becauseofAI/pytorch-tutorial/" title="前往 Github 仓库" class="md-source" data-md-source="github">
+  
+    <div class="md-source__icon">
+      <svg viewBox="0 0 24 24" width="24" height="24">
+        <use xlink:href="#__github" width="24" height="24"></use>
+      </svg>
+    </div>
+  
+  <div class="md-source__repository">
+    pytorch-tutorial
+  </div>
+</a>
+          </div>
+        </div>
+      
+    </div>
+  </nav>
+</header>
+    
+    <div class="md-container">
+      
+        
+      
+      
+      <main class="md-main">
+        <div class="md-main__inner md-grid" data-md-component="container">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="__drawer">
+    <a href="https://becauseofAI.github.io/pytorch-tutorial/" title="PyTorch Tutorial" class="md-nav__button md-logo">
+      
+        <i class="md-icon"></i>
+      
+    </a>
+    PyTorch Tutorial
+  </label>
+  
+    <div class="md-nav__source">
+      
+
+
+  
+
+<a href="https://github.com/becauseofAI/pytorch-tutorial/" title="前往 Github 仓库" class="md-source" data-md-source="github">
+  
+    <div class="md-source__icon">
+      <svg viewBox="0 0 24 24" width="24" height="24">
+        <use xlink:href="#__github" width="24" height="24"></use>
+      </svg>
+    </div>
+  
+  <div class="md-source__repository">
+    pytorch-tutorial
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../../.." title="Introduction" class="md-nav__link">
+      Introduction
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2" checked>
+    
+    <label class="md-nav__link" for="nav-2">
+      Tutorials
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-2">
+        Tutorials
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2-1" type="checkbox" id="nav-2-1">
+    
+    <label class="md-nav__link" for="nav-2-1">
+      Ghapter01 Getting Started
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-2-1">
+        Ghapter01 Getting Started
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../chapter01_getting-started/1_1_pytorch-introduction/" title="1.1 PyTorch Tntroduction" class="md-nav__link">
+      1.1 PyTorch Tntroduction
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2-1-2" type="checkbox" id="nav-2-1-2">
+    
+    <label class="md-nav__link" for="nav-2-1-2">
+      1.3 PyTorch 60 Minute Blitz
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="3">
+      <label class="md-nav__title" for="nav-2-1-2">
+        1.3 PyTorch 60 Minute Blitz
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../chapter01_getting-started/1_3_1_tensor_tutorial/" title="1.3.1 Tensor" class="md-nav__link">
+      1.3.1 Tensor
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../chapter01_getting-started/1_3_2_autograd_tutorial/" title="1.3.2 Autograd" class="md-nav__link">
+      1.3.2 Autograd
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../chapter01_getting-started/1_3_3_neural_networks_tutorial/" title="1.3.3 Neural Networks" class="md-nav__link">
+      1.3.3 Neural Networks
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../chapter01_getting-started/1_3_4_cifar10_tutorial/" title="1.3.4 Classifier" class="md-nav__link">
+      1.3.4 Classifier
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../chapter01_getting-started/1_3_5_data_parallel_tutorial/" title="1.3.5 Data Parallelism" class="md-nav__link">
+      1.3.5 Data Parallelism
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2-2" type="checkbox" id="nav-2-2" checked>
+    
+    <label class="md-nav__link" for="nav-2-2">
+      Ghapter02 Basics
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-2-2">
+        Ghapter02 Basics
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2-2-1" type="checkbox" id="nav-2-2-1" checked>
+    
+    <label class="md-nav__link" for="nav-2-2-1">
+      2.1 Basic
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="3">
+      <label class="md-nav__title" for="nav-2-2-1">
+        2.1 Basic
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../2_1_1_pytorch-basics-tensor/" title="2.1.1 Tensor" class="md-nav__link">
+      2.1.1 Tensor
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        2.1.2 AutoGrad
+      </label>
+    
+    <a href="./" title="2.1.2 AutoGrad" class="md-nav__link md-nav__link--active">
+      2.1.2 AutoGrad
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">目录</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#autograd" title="Autograd" class="md-nav__link">
+    Autograd
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_1" title="简单的自动求导" class="md-nav__link">
+    简单的自动求导
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" title="复杂的自动求导" class="md-nav__link">
+    复杂的自动求导
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#autograd_1" title="Autograd 过程解析" class="md-nav__link">
+    Autograd 过程解析
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#autograd_2" title="扩展Autograd" class="md-nav__link">
+    扩展Autograd
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../2_1_3_pytorch-basics-nerual-network/" title="2.1.3 Nerual Network" class="md-nav__link">
+      2.1.3 Nerual Network
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../2_1_4_pytorch-basics-data-loader/" title="2.1.4 Data Loader" class="md-nav__link">
+      2.1.4 Data Loader
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../2_2_deep-learning-mathematics-basic/" title="2.2 Deep Learning Mathematics Basic" class="md-nav__link">
+      2.2 Deep Learning Mathematics Basic
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../2_3_deep-learning-neural-network-introduction/" title="2.3 Deep Learning Neural Network Introduction" class="md-nav__link">
+      2.3 Deep Learning Neural Network Introduction
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../2_4_convolutional-neural-network/" title="2.4 Convolutional Neural Network" class="md-nav__link">
+      2.4 Convolutional Neural Network
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../2_5_recurrent-neural-network/" title="2.5 Recurrent Neural Network" class="md-nav__link">
+      2.5 Recurrent Neural Network
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2-3" type="checkbox" id="nav-2-3">
+    
+    <label class="md-nav__link" for="nav-2-3">
+      Ghapter03 Intermediate
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-2-3">
+        Ghapter03 Intermediate
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../chapter03_intermediate/3_1_logistic-regression/" title="3.1 Logistic Regression" class="md-nav__link">
+      3.1 Logistic Regression
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2-3-2" type="checkbox" id="nav-2-3-2">
+    
+    <label class="md-nav__link" for="nav-2-3-2">
+      3.2 CNN
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="3">
+      <label class="md-nav__title" for="nav-2-3-2">
+        3.2 CNN
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../chapter03_intermediate/3_2_1_cnn_convnet_mnist/" title="3.2.1 ConvNet Mnist" class="md-nav__link">
+      3.2.1 ConvNet Mnist
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../chapter03_intermediate/3_2_2_cnn_resnet_cifar10/" title="3.2.2 ResNet_Cifar10" class="md-nav__link">
+      3.2.2 ResNet_Cifar10
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../chapter03_intermediate/3_3_rnn/" title="3.3 RNN" class="md-nav__link">
+      3.3 RNN
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2-4" type="checkbox" id="nav-2-4">
+    
+    <label class="md-nav__link" for="nav-2-4">
+      Ghapter04 Advanced
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-2-4">
+        Ghapter04 Advanced
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../chapter04_advanced/4_1_fine-tuning/" title="Fine Tuning" class="md-nav__link">
+      Fine Tuning
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2-4-2" type="checkbox" id="nav-2-4-2">
+    
+    <label class="md-nav__link" for="nav-2-4-2">
+      Visualization
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="3">
+      <label class="md-nav__title" for="nav-2-4-2">
+        Visualization
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../chapter04_advanced/4_2_1_visdom/" title="Visdom" class="md-nav__link">
+      Visdom
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../chapter04_advanced/4_2_2_tensorboardx/" title="TensorBoardX" class="md-nav__link">
+      TensorBoardX
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../chapter04_advanced/4_2_3_cnn-visualizing/" title="CNN Visualizing" class="md-nav__link">
+      CNN Visualizing
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../chapter04_advanced/4_3_multiply-gpu-parallel-training/" title="Parallel" class="md-nav__link">
+      Parallel
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../chapter04_advanced/4_4_fastai/" title="FastAI" class="md-nav__link">
+      FastAI
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2-5" type="checkbox" id="nav-2-5">
+    
+    <label class="md-nav__link" for="nav-2-5">
+      Ghapter05 Application
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-2-5">
+        Ghapter05 Application
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../chapter05_application/5_1_kaggle/" title="5.1 Kaggle" class="md-nav__link">
+      5.1 Kaggle
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../chapter05_application/readme/" title="5.2 结构化数据" class="md-nav__link">
+      5.2 结构化数据
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2-5-3" type="checkbox" id="nav-2-5-3">
+    
+    <label class="md-nav__link" for="nav-2-5-3">
+      5.3 Computer Vision
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="3">
+      <label class="md-nav__title" for="nav-2-5-3">
+        5.3 Computer Vision
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../chapter05_application/readme/" title="Detection" class="md-nav__link">
+      Detection
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../chapter05_application/readme/" title="Segmentation" class="md-nav__link">
+      Segmentation
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../chapter05_application/readme/" title="Recognition" class="md-nav__link">
+      Recognition
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../chapter05_application/readme/" title="GAN" class="md-nav__link">
+      GAN
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../chapter05_application/readme/" title="Others" class="md-nav__link">
+      Others
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../chapter05_application/readme/" title="5.4 自然语言处理" class="md-nav__link">
+      5.4 自然语言处理
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../chapter05_application/readme/" title="5.5 协同过滤" class="md-nav__link">
+      5.5 协同过滤
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../../../about/" title="About" class="md-nav__link">
+      About
+    </a>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">目录</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#autograd" title="Autograd" class="md-nav__link">
+    Autograd
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_1" title="简单的自动求导" class="md-nav__link">
+    简单的自动求导
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" title="复杂的自动求导" class="md-nav__link">
+    复杂的自动求导
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#autograd_1" title="Autograd 过程解析" class="md-nav__link">
+    Autograd 过程解析
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#autograd_2" title="扩展Autograd" class="md-nav__link">
+    扩展Autograd
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                <div class="codehilite"><pre><span></span><span class="kn">import</span> <span class="nn">torch</span>
+<span class="n">torch</span><span class="o">.</span><span class="n">__version__</span>
+</pre></div>
+
+<div class="codehilite"><pre><span></span>&#39;1.0.1.post2&#39;
+</pre></div>
+
+
+<h1 id="pytorch">使用PyTorch计算梯度数值<a class="headerlink" href="#pytorch" title="Permanent link">&para;</a></h1>
+<p>PyTorch的Autograd模块实现了深度学习的算法中的向传播求导数，在张量（Tensor类）上的所有操作，Autograd都能为他们自动提供微分，简化了手动计算导数的复杂过程。</p>
+<p>在0.4以前的版本中，Pytorch使用Variable类来自动计算所有的梯度Variable类主要包含三个属性：
+data：保存Variable所包含的Tensor；grad：保存data对应的梯度，grad也是个Variable，而不是Tensor，它和data的形状一样；grad_fn：指向一个Function对象，这个Function用来反向传播计算输入的梯度。</p>
+<p>从0.4起, Variable 正式合并入Tensor类, 通过Variable嵌套实现的自动微分功能已经整合进入了Tensor类中。虽然为了代码的兼容性还是可以使用Variable(tensor)这种方式进行嵌套, 但是这个操作其实什么都没做。</p>
+<p>所以，以后的代码建议直接使用Tensor类进行操作，因为官方文档中已经将Variable设置成过期模块。</p>
+<p>要想通过Tensor类本身就支持了使用autograd功能，只需要设置.requries_grad=True</p>
+<p>Variable类中的的grad和grad_fn属性已经整合进入了Tensor类中</p>
+<h2 id="autograd">Autograd<a class="headerlink" href="#autograd" title="Permanent link">&para;</a></h2>
+<p>在张量创建时，通过设置 requires_grad 标识为Ture来告诉Pytorch需要对该张量进行自动求导，PyTorch会记录该张量的每一步操作历史并自动计算</p>
+<div class="codehilite"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">requires_grad</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">x</span>
+</pre></div>
+
+<div class="codehilite"><pre><span></span>tensor([[0.0403, 0.5633, 0.2561, 0.4064, 0.9596],
+        [0.6928, 0.1832, 0.5380, 0.6386, 0.8710],
+        [0.5332, 0.8216, 0.8139, 0.1925, 0.4993],
+        [0.2650, 0.6230, 0.5945, 0.3230, 0.0752],
+        [0.0919, 0.4770, 0.4622, 0.6185, 0.2761]], requires_grad=True)
+</pre></div>
+
+
+<div class="codehilite"><pre><span></span><span class="n">y</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">requires_grad</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">y</span>
+</pre></div>
+
+<div class="codehilite"><pre><span></span>tensor([[0.2269, 0.7673, 0.8179, 0.5558, 0.0493],
+        [0.7762, 0.9242, 0.2872, 0.0035, 0.4197],
+        [0.4322, 0.5281, 0.9001, 0.7276, 0.3218],
+        [0.5123, 0.6567, 0.9465, 0.0475, 0.9172],
+        [0.9899, 0.9284, 0.5303, 0.1718, 0.3937]], requires_grad=True)
+</pre></div>
+
+
+<p>PyTorch会自动追踪和记录对与张量的所有操作，当计算完成后调用.backward()方法自动计算梯度并且将计算结果保存到grad属性中。</p>
+<div class="codehilite"><pre><span></span><span class="n">z</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">x</span><span class="o">+</span><span class="n">y</span><span class="p">)</span>
+<span class="n">z</span>
+</pre></div>
+
+<div class="codehilite"><pre><span></span>tensor(25.6487, grad_fn=&lt;SumBackward0&gt;)
+</pre></div>
+
+
+<p>在张量进行操作后，grad_fn已经被赋予了一个新的函数，这个函数引用了一个创建了这个Tensor类的Function对象。
+Tensor和Function互相连接生成了一个非循环图，它记录并且编码了完整的计算历史。每个张量都有一个.grad_fn属性，如果这个张量是用户手动创建的那么这个张量的grad_fn是None。</p>
+<p>下面我们来调用反向传播函数，计算其梯度</p>
+<h2 id="_1">简单的自动求导<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<div class="codehilite"><pre><span></span><span class="n">z</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">grad</span><span class="p">,</span><span class="n">y</span><span class="o">.</span><span class="n">grad</span><span class="p">)</span>
+</pre></div>
+
+<div class="codehilite"><pre><span></span>tensor([[1., 1., 1., 1., 1.],
+        [1., 1., 1., 1., 1.],
+        [1., 1., 1., 1., 1.],
+        [1., 1., 1., 1., 1.],
+        [1., 1., 1., 1., 1.]]) tensor([[1., 1., 1., 1., 1.],
+        [1., 1., 1., 1., 1.],
+        [1., 1., 1., 1., 1.],
+        [1., 1., 1., 1., 1.],
+        [1., 1., 1., 1., 1.]])
+</pre></div>
+
+
+<p>如果Tensor类表示的是一个标量（即它包含一个元素的张量），则不需要为backward()指定任何参数，但是如果它有更多的元素，则需要指定一个gradient参数，它是形状匹配的张量。
+以上的 <code>z.backward()</code>相当于是<code>z.backward(torch.tensor(1.))</code>的简写。
+这种参数常出现在图像分类中的单标签分类，输出一个标量代表图像的标签。</p>
+<h2 id="_2">复杂的自动求导<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<div class="codehilite"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">requires_grad</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">requires_grad</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">z</span><span class="o">=</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="o">+</span><span class="n">y</span><span class="o">**</span><span class="mi">3</span>
+<span class="n">z</span>
+</pre></div>
+
+<div class="codehilite"><pre><span></span>tensor([[3.3891e-01, 4.9468e-01, 8.0797e-02, 2.5656e-01, 2.9529e-01],
+        [7.1946e-01, 1.6977e-02, 1.7965e-01, 3.2656e-01, 1.7665e-01],
+        [3.1353e-01, 2.2096e-01, 1.2251e+00, 5.5087e-01, 5.9572e-02],
+        [1.3015e+00, 3.8029e-01, 1.1103e+00, 4.0392e-01, 2.2055e-01],
+        [8.8726e-02, 6.9701e-01, 8.0164e-01, 9.7221e-01, 4.2239e-04]],
+       grad_fn=&lt;AddBackward0&gt;)
+</pre></div>
+
+
+<div class="codehilite"><pre><span></span><span class="c1">#我们的返回值不是一个标量，所以需要输入一个大小相同的张量作为参数，这里我们用ones_like函数根据x生成一个张量</span>
+<span class="n">z</span><span class="o">.</span><span class="n">backward</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">grad</span><span class="p">)</span>
+</pre></div>
+
+<div class="codehilite"><pre><span></span>tensor([[0.2087, 1.3554, 0.5560, 1.0009, 0.9931],
+        [1.2655, 0.1223, 0.8008, 1.1127, 0.7261],
+        [1.1052, 0.2579, 1.8006, 0.1544, 0.3646],
+        [1.8855, 1.2296, 1.9061, 0.9313, 0.0648],
+        [0.5952, 1.6190, 0.8430, 1.9213, 0.0322]])
+</pre></div>
+
+
+<p>我们可以使用with torch.no_grad()上下文管理器临时禁止对已设置requires_grad=True的张量进行自动求导。这个方法在测试集计算准确率的时候会经常用到，例如：</p>
+<div class="codehilite"><pre><span></span><span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">():</span>
+    <span class="k">print</span><span class="p">((</span><span class="n">x</span> <span class="o">+</span><span class="n">y</span><span class="o">*</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">requires_grad</span><span class="p">)</span>
+</pre></div>
+
+<div class="codehilite"><pre><span></span>False
+</pre></div>
+
+
+<p>使用.no_grad()进行嵌套后，代码不会跟踪历史记录也就是说保存这部分记录的内存不糊会减少内存的使用量并且会加快少许的运算速度。</p>
+<h2 id="autograd_1">Autograd 过程解析<a class="headerlink" href="#autograd_1" title="Permanent link">&para;</a></h2>
+<p>为了说明Pytorch的自动求导原理，我们来尝试分析一下PyTorch的源代码，虽然Pytorch的 Tensor和 TensorBase都是使用CPP来实现的，但是可以使用一些Python的一些方法查看这些对象在Python的属性和状态。
+ Python的 <code>dir()</code> 返回参数的属性、方法列表。<code>z</code>是一个Tensor变量，看看里面有哪些成员变量。</p>
+<div class="codehilite"><pre><span></span><span class="nb">dir</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
+</pre></div>
+
+<div class="codehilite"><pre><span></span>[&#39;__abs__&#39;,
+ &#39;__add__&#39;,
+ &#39;__and__&#39;,
+ &#39;__array__&#39;,
+ &#39;__array_priority__&#39;,
+ &#39;__array_wrap__&#39;,
+ &#39;__bool__&#39;,
+ &#39;__class__&#39;,
+ &#39;__deepcopy__&#39;,
+ &#39;__delattr__&#39;,
+ &#39;__delitem__&#39;,
+ &#39;__dict__&#39;,
+ &#39;__dir__&#39;,
+ &#39;__div__&#39;,
+ &#39;__doc__&#39;,
+ &#39;__eq__&#39;,
+ &#39;__float__&#39;,
+ &#39;__floordiv__&#39;,
+ &#39;__format__&#39;,
+ &#39;__ge__&#39;,
+ &#39;__getattribute__&#39;,
+ &#39;__getitem__&#39;,
+ &#39;__gt__&#39;,
+ &#39;__hash__&#39;,
+ &#39;__iadd__&#39;,
+ &#39;__iand__&#39;,
+ &#39;__idiv__&#39;,
+ &#39;__ilshift__&#39;,
+ &#39;__imul__&#39;,
+ &#39;__index__&#39;,
+ &#39;__init__&#39;,
+ &#39;__init_subclass__&#39;,
+ &#39;__int__&#39;,
+ &#39;__invert__&#39;,
+ &#39;__ior__&#39;,
+ &#39;__ipow__&#39;,
+ &#39;__irshift__&#39;,
+ &#39;__isub__&#39;,
+ &#39;__iter__&#39;,
+ &#39;__itruediv__&#39;,
+ &#39;__ixor__&#39;,
+ &#39;__le__&#39;,
+ &#39;__len__&#39;,
+ &#39;__long__&#39;,
+ &#39;__lshift__&#39;,
+ &#39;__lt__&#39;,
+ &#39;__matmul__&#39;,
+ &#39;__mod__&#39;,
+ &#39;__module__&#39;,
+ &#39;__mul__&#39;,
+ &#39;__ne__&#39;,
+ &#39;__neg__&#39;,
+ &#39;__new__&#39;,
+ &#39;__nonzero__&#39;,
+ &#39;__or__&#39;,
+ &#39;__pow__&#39;,
+ &#39;__radd__&#39;,
+ &#39;__rdiv__&#39;,
+ &#39;__reduce__&#39;,
+ &#39;__reduce_ex__&#39;,
+ &#39;__repr__&#39;,
+ &#39;__reversed__&#39;,
+ &#39;__rfloordiv__&#39;,
+ &#39;__rmul__&#39;,
+ &#39;__rpow__&#39;,
+ &#39;__rshift__&#39;,
+ &#39;__rsub__&#39;,
+ &#39;__rtruediv__&#39;,
+ &#39;__setattr__&#39;,
+ &#39;__setitem__&#39;,
+ &#39;__setstate__&#39;,
+ &#39;__sizeof__&#39;,
+ &#39;__str__&#39;,
+ &#39;__sub__&#39;,
+ &#39;__subclasshook__&#39;,
+ &#39;__truediv__&#39;,
+ &#39;__weakref__&#39;,
+ &#39;__xor__&#39;,
+ &#39;_backward_hooks&#39;,
+ &#39;_base&#39;,
+ &#39;_cdata&#39;,
+ &#39;_coalesced_&#39;,
+ &#39;_dimI&#39;,
+ &#39;_dimV&#39;,
+ &#39;_grad&#39;,
+ &#39;_grad_fn&#39;,
+ &#39;_indices&#39;,
+ &#39;_make_subclass&#39;,
+ &#39;_nnz&#39;,
+ &#39;_values&#39;,
+ &#39;_version&#39;,
+ &#39;abs&#39;,
+ &#39;abs_&#39;,
+ &#39;acos&#39;,
+ &#39;acos_&#39;,
+ &#39;add&#39;,
+ &#39;add_&#39;,
+ &#39;addbmm&#39;,
+ &#39;addbmm_&#39;,
+ &#39;addcdiv&#39;,
+ &#39;addcdiv_&#39;,
+ &#39;addcmul&#39;,
+ &#39;addcmul_&#39;,
+ &#39;addmm&#39;,
+ &#39;addmm_&#39;,
+ &#39;addmv&#39;,
+ &#39;addmv_&#39;,
+ &#39;addr&#39;,
+ &#39;addr_&#39;,
+ &#39;all&#39;,
+ &#39;allclose&#39;,
+ &#39;any&#39;,
+ &#39;apply_&#39;,
+ &#39;argmax&#39;,
+ &#39;argmin&#39;,
+ &#39;argsort&#39;,
+ &#39;as_strided&#39;,
+ &#39;as_strided_&#39;,
+ &#39;asin&#39;,
+ &#39;asin_&#39;,
+ &#39;atan&#39;,
+ &#39;atan2&#39;,
+ &#39;atan2_&#39;,
+ &#39;atan_&#39;,
+ &#39;backward&#39;,
+ &#39;baddbmm&#39;,
+ &#39;baddbmm_&#39;,
+ &#39;bernoulli&#39;,
+ &#39;bernoulli_&#39;,
+ &#39;bincount&#39;,
+ &#39;bmm&#39;,
+ &#39;btrifact&#39;,
+ &#39;btrifact_with_info&#39;,
+ &#39;btrisolve&#39;,
+ &#39;byte&#39;,
+ &#39;cauchy_&#39;,
+ &#39;ceil&#39;,
+ &#39;ceil_&#39;,
+ &#39;char&#39;,
+ &#39;cholesky&#39;,
+ &#39;chunk&#39;,
+ &#39;clamp&#39;,
+ &#39;clamp_&#39;,
+ &#39;clamp_max&#39;,
+ &#39;clamp_max_&#39;,
+ &#39;clamp_min&#39;,
+ &#39;clamp_min_&#39;,
+ &#39;clone&#39;,
+ &#39;coalesce&#39;,
+ &#39;contiguous&#39;,
+ &#39;copy_&#39;,
+ &#39;cos&#39;,
+ &#39;cos_&#39;,
+ &#39;cosh&#39;,
+ &#39;cosh_&#39;,
+ &#39;cpu&#39;,
+ &#39;cross&#39;,
+ &#39;cuda&#39;,
+ &#39;cumprod&#39;,
+ &#39;cumsum&#39;,
+ &#39;data&#39;,
+ &#39;data_ptr&#39;,
+ &#39;dense_dim&#39;,
+ &#39;det&#39;,
+ &#39;detach&#39;,
+ &#39;detach_&#39;,
+ &#39;device&#39;,
+ &#39;diag&#39;,
+ &#39;diag_embed&#39;,
+ &#39;diagflat&#39;,
+ &#39;diagonal&#39;,
+ &#39;digamma&#39;,
+ &#39;digamma_&#39;,
+ &#39;dim&#39;,
+ &#39;dist&#39;,
+ &#39;div&#39;,
+ &#39;div_&#39;,
+ &#39;dot&#39;,
+ &#39;double&#39;,
+ &#39;dtype&#39;,
+ &#39;eig&#39;,
+ &#39;element_size&#39;,
+ &#39;eq&#39;,
+ &#39;eq_&#39;,
+ &#39;equal&#39;,
+ &#39;erf&#39;,
+ &#39;erf_&#39;,
+ &#39;erfc&#39;,
+ &#39;erfc_&#39;,
+ &#39;erfinv&#39;,
+ &#39;erfinv_&#39;,
+ &#39;exp&#39;,
+ &#39;exp_&#39;,
+ &#39;expand&#39;,
+ &#39;expand_as&#39;,
+ &#39;expm1&#39;,
+ &#39;expm1_&#39;,
+ &#39;exponential_&#39;,
+ &#39;fft&#39;,
+ &#39;fill_&#39;,
+ &#39;flatten&#39;,
+ &#39;flip&#39;,
+ &#39;float&#39;,
+ &#39;floor&#39;,
+ &#39;floor_&#39;,
+ &#39;fmod&#39;,
+ &#39;fmod_&#39;,
+ &#39;frac&#39;,
+ &#39;frac_&#39;,
+ &#39;gather&#39;,
+ &#39;ge&#39;,
+ &#39;ge_&#39;,
+ &#39;gels&#39;,
+ &#39;geometric_&#39;,
+ &#39;geqrf&#39;,
+ &#39;ger&#39;,
+ &#39;gesv&#39;,
+ &#39;get_device&#39;,
+ &#39;grad&#39;,
+ &#39;grad_fn&#39;,
+ &#39;gt&#39;,
+ &#39;gt_&#39;,
+ &#39;half&#39;,
+ &#39;hardshrink&#39;,
+ &#39;histc&#39;,
+ &#39;ifft&#39;,
+ &#39;index_add&#39;,
+ &#39;index_add_&#39;,
+ &#39;index_copy&#39;,
+ &#39;index_copy_&#39;,
+ &#39;index_fill&#39;,
+ &#39;index_fill_&#39;,
+ &#39;index_put&#39;,
+ &#39;index_put_&#39;,
+ &#39;index_select&#39;,
+ &#39;indices&#39;,
+ &#39;int&#39;,
+ &#39;inverse&#39;,
+ &#39;irfft&#39;,
+ &#39;is_coalesced&#39;,
+ &#39;is_complex&#39;,
+ &#39;is_contiguous&#39;,
+ &#39;is_cuda&#39;,
+ &#39;is_distributed&#39;,
+ &#39;is_floating_point&#39;,
+ &#39;is_leaf&#39;,
+ &#39;is_nonzero&#39;,
+ &#39;is_pinned&#39;,
+ &#39;is_same_size&#39;,
+ &#39;is_set_to&#39;,
+ &#39;is_shared&#39;,
+ &#39;is_signed&#39;,
+ &#39;is_sparse&#39;,
+ &#39;isclose&#39;,
+ &#39;item&#39;,
+ &#39;kthvalue&#39;,
+ &#39;layout&#39;,
+ &#39;le&#39;,
+ &#39;le_&#39;,
+ &#39;lerp&#39;,
+ &#39;lerp_&#39;,
+ &#39;lgamma&#39;,
+ &#39;lgamma_&#39;,
+ &#39;log&#39;,
+ &#39;log10&#39;,
+ &#39;log10_&#39;,
+ &#39;log1p&#39;,
+ &#39;log1p_&#39;,
+ &#39;log2&#39;,
+ &#39;log2_&#39;,
+ &#39;log_&#39;,
+ &#39;log_normal_&#39;,
+ &#39;log_softmax&#39;,
+ &#39;logdet&#39;,
+ &#39;logsumexp&#39;,
+ &#39;long&#39;,
+ &#39;lt&#39;,
+ &#39;lt_&#39;,
+ &#39;map2_&#39;,
+ &#39;map_&#39;,
+ &#39;masked_fill&#39;,
+ &#39;masked_fill_&#39;,
+ &#39;masked_scatter&#39;,
+ &#39;masked_scatter_&#39;,
+ &#39;masked_select&#39;,
+ &#39;matmul&#39;,
+ &#39;matrix_power&#39;,
+ &#39;max&#39;,
+ &#39;mean&#39;,
+ &#39;median&#39;,
+ &#39;min&#39;,
+ &#39;mm&#39;,
+ &#39;mode&#39;,
+ &#39;mul&#39;,
+ &#39;mul_&#39;,
+ &#39;multinomial&#39;,
+ &#39;mv&#39;,
+ &#39;mvlgamma&#39;,
+ &#39;mvlgamma_&#39;,
+ &#39;name&#39;,
+ &#39;narrow&#39;,
+ &#39;narrow_copy&#39;,
+ &#39;ndimension&#39;,
+ &#39;ne&#39;,
+ &#39;ne_&#39;,
+ &#39;neg&#39;,
+ &#39;neg_&#39;,
+ &#39;nelement&#39;,
+ &#39;new&#39;,
+ &#39;new_empty&#39;,
+ &#39;new_full&#39;,
+ &#39;new_ones&#39;,
+ &#39;new_tensor&#39;,
+ &#39;new_zeros&#39;,
+ &#39;nonzero&#39;,
+ &#39;norm&#39;,
+ &#39;normal_&#39;,
+ &#39;numel&#39;,
+ &#39;numpy&#39;,
+ &#39;orgqr&#39;,
+ &#39;ormqr&#39;,
+ &#39;output_nr&#39;,
+ &#39;permute&#39;,
+ &#39;pin_memory&#39;,
+ &#39;pinverse&#39;,
+ &#39;polygamma&#39;,
+ &#39;polygamma_&#39;,
+ &#39;potrf&#39;,
+ &#39;potri&#39;,
+ &#39;potrs&#39;,
+ &#39;pow&#39;,
+ &#39;pow_&#39;,
+ &#39;prelu&#39;,
+ &#39;prod&#39;,
+ &#39;pstrf&#39;,
+ &#39;put_&#39;,
+ &#39;qr&#39;,
+ &#39;random_&#39;,
+ &#39;reciprocal&#39;,
+ &#39;reciprocal_&#39;,
+ &#39;record_stream&#39;,
+ &#39;register_hook&#39;,
+ &#39;reinforce&#39;,
+ &#39;relu&#39;,
+ &#39;relu_&#39;,
+ &#39;remainder&#39;,
+ &#39;remainder_&#39;,
+ &#39;renorm&#39;,
+ &#39;renorm_&#39;,
+ &#39;repeat&#39;,
+ &#39;requires_grad&#39;,
+ &#39;requires_grad_&#39;,
+ &#39;reshape&#39;,
+ &#39;reshape_as&#39;,
+ &#39;resize&#39;,
+ &#39;resize_&#39;,
+ &#39;resize_as&#39;,
+ &#39;resize_as_&#39;,
+ &#39;retain_grad&#39;,
+ &#39;rfft&#39;,
+ &#39;roll&#39;,
+ &#39;rot90&#39;,
+ &#39;round&#39;,
+ &#39;round_&#39;,
+ &#39;rsqrt&#39;,
+ &#39;rsqrt_&#39;,
+ &#39;scatter&#39;,
+ &#39;scatter_&#39;,
+ &#39;scatter_add&#39;,
+ &#39;scatter_add_&#39;,
+ &#39;select&#39;,
+ &#39;set_&#39;,
+ &#39;shape&#39;,
+ &#39;share_memory_&#39;,
+ &#39;short&#39;,
+ &#39;sigmoid&#39;,
+ &#39;sigmoid_&#39;,
+ &#39;sign&#39;,
+ &#39;sign_&#39;,
+ &#39;sin&#39;,
+ &#39;sin_&#39;,
+ &#39;sinh&#39;,
+ &#39;sinh_&#39;,
+ &#39;size&#39;,
+ &#39;slogdet&#39;,
+ &#39;smm&#39;,
+ &#39;softmax&#39;,
+ &#39;sort&#39;,
+ &#39;sparse_dim&#39;,
+ &#39;sparse_mask&#39;,
+ &#39;sparse_resize_&#39;,
+ &#39;sparse_resize_and_clear_&#39;,
+ &#39;split&#39;,
+ &#39;split_with_sizes&#39;,
+ &#39;sqrt&#39;,
+ &#39;sqrt_&#39;,
+ &#39;squeeze&#39;,
+ &#39;squeeze_&#39;,
+ &#39;sspaddmm&#39;,
+ &#39;std&#39;,
+ &#39;stft&#39;,
+ &#39;storage&#39;,
+ &#39;storage_offset&#39;,
+ &#39;storage_type&#39;,
+ &#39;stride&#39;,
+ &#39;sub&#39;,
+ &#39;sub_&#39;,
+ &#39;sum&#39;,
+ &#39;svd&#39;,
+ &#39;symeig&#39;,
+ &#39;t&#39;,
+ &#39;t_&#39;,
+ &#39;take&#39;,
+ &#39;tan&#39;,
+ &#39;tan_&#39;,
+ &#39;tanh&#39;,
+ &#39;tanh_&#39;,
+ &#39;to&#39;,
+ &#39;to_dense&#39;,
+ &#39;to_sparse&#39;,
+ &#39;tolist&#39;,
+ &#39;topk&#39;,
+ &#39;trace&#39;,
+ &#39;transpose&#39;,
+ &#39;transpose_&#39;,
+ &#39;tril&#39;,
+ &#39;tril_&#39;,
+ &#39;triu&#39;,
+ &#39;triu_&#39;,
+ &#39;trtrs&#39;,
+ &#39;trunc&#39;,
+ &#39;trunc_&#39;,
+ &#39;type&#39;,
+ &#39;type_as&#39;,
+ &#39;unbind&#39;,
+ &#39;unfold&#39;,
+ &#39;uniform_&#39;,
+ &#39;unique&#39;,
+ &#39;unsqueeze&#39;,
+ &#39;unsqueeze_&#39;,
+ &#39;values&#39;,
+ &#39;var&#39;,
+ &#39;view&#39;,
+ &#39;view_as&#39;,
+ &#39;where&#39;,
+ &#39;zero_&#39;]
+</pre></div>
+
+
+<p>返回很多，我们直接排除掉一些Python中特殊方法（以__开头和结束的）和私有方法（以_开头的，直接看几个比较主要的属性：
+<code>.is_leaf</code>：记录是否是叶子节点。通过这个属性来确定这个变量的类型
+在官方文档中所说的“graph leaves”,“leaf variables”，都是指像<code>x</code>,<code>y</code>这样的手动创建的、而非运算得到的变量，这些变量成为创建变量。
+像<code>z</code>这样的，是通过计算后得到的结果称为结果变量。</p>
+<p>一个变量是创建变量还是结果变量是通过<code>.is_leaf</code>来获取的。</p>
+<div class="codehilite"><pre><span></span><span class="k">print</span><span class="p">(</span><span class="s2">&quot;x.is_leaf=&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">is_leaf</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;z.is_leaf=&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">z</span><span class="o">.</span><span class="n">is_leaf</span><span class="p">))</span>
+</pre></div>
+
+<div class="codehilite"><pre><span></span>x.is_leaf=True
+z.is_leaf=False
+</pre></div>
+
+
+<p><code>x</code>是手动创建的没有通过计算，所以他被认为是一个叶子节点也就是一个创建变量，而<code>z</code>是通过<code>x</code>与<code>y</code>的一系列计算得到的，所以不是叶子结点也就是结果变量。</p>
+<p>为什么我们执行<code>z.backward()</code>方法会更新<code>x.grad</code>和<code>y.grad</code>呢？
+<code>.grad_fn</code>属性记录的就是这部分的操作，虽然<code>.backward()</code>方法也是CPP实现的，但是可以通过Python来进行简单的探索。</p>
+<p><code>grad_fn</code>：记录并且编码了完整的计算历史</p>
+<div class="codehilite"><pre><span></span><span class="n">z</span><span class="o">.</span><span class="n">grad_fn</span>
+</pre></div>
+
+<div class="codehilite"><pre><span></span>&lt;AddBackward0 at 0x120840a90&gt;
+</pre></div>
+
+
+<p><code>grad_fn</code>是一个<code>AddBackward0</code>类型的变量 <code>AddBackward0</code>这个类也是用Cpp来写的,但是我们从名字里就能够大概知道，他是加法(ADD)的反反向传播（Backward），看看里面有些什么东西</p>
+<div class="codehilite"><pre><span></span><span class="nb">dir</span><span class="p">(</span><span class="n">z</span><span class="o">.</span><span class="n">grad_fn</span><span class="p">)</span>
+</pre></div>
+
+<div class="codehilite"><pre><span></span>[&#39;__call__&#39;,
+ &#39;__class__&#39;,
+ &#39;__delattr__&#39;,
+ &#39;__dir__&#39;,
+ &#39;__doc__&#39;,
+ &#39;__eq__&#39;,
+ &#39;__format__&#39;,
+ &#39;__ge__&#39;,
+ &#39;__getattribute__&#39;,
+ &#39;__gt__&#39;,
+ &#39;__hash__&#39;,
+ &#39;__init__&#39;,
+ &#39;__init_subclass__&#39;,
+ &#39;__le__&#39;,
+ &#39;__lt__&#39;,
+ &#39;__ne__&#39;,
+ &#39;__new__&#39;,
+ &#39;__reduce__&#39;,
+ &#39;__reduce_ex__&#39;,
+ &#39;__repr__&#39;,
+ &#39;__setattr__&#39;,
+ &#39;__sizeof__&#39;,
+ &#39;__str__&#39;,
+ &#39;__subclasshook__&#39;,
+ &#39;_register_hook_dict&#39;,
+ &#39;metadata&#39;,
+ &#39;name&#39;,
+ &#39;next_functions&#39;,
+ &#39;register_hook&#39;,
+ &#39;requires_grad&#39;]
+</pre></div>
+
+
+<p><code>next_functions</code>就是<code>grad_fn</code>的精华</p>
+<div class="codehilite"><pre><span></span><span class="n">z</span><span class="o">.</span><span class="n">grad_fn</span><span class="o">.</span><span class="n">next_functions</span>
+</pre></div>
+
+<div class="codehilite"><pre><span></span>((&lt;PowBackward0 at 0x1208409b0&gt;, 0), (&lt;PowBackward0 at 0x1208408d0&gt;, 0))
+</pre></div>
+
+
+<p><code>next_functions</code>是一个tuple of tuple of PowBackward0 and int。</p>
+<p>为什么是2个tuple ？
+因为我们的操作是<code>z= x**2+y**3</code> 刚才的<code>AddBackward0</code>是相加，而前面的操作是乘方 <code>PowBackward0</code>。tuple第一个元素就是x相关的操作记录</p>
+<div class="codehilite"><pre><span></span><span class="n">xg</span> <span class="o">=</span> <span class="n">z</span><span class="o">.</span><span class="n">grad_fn</span><span class="o">.</span><span class="n">next_functions</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+<span class="nb">dir</span><span class="p">(</span><span class="n">xg</span><span class="p">)</span>
+</pre></div>
+
+<div class="codehilite"><pre><span></span>[&#39;__call__&#39;,
+ &#39;__class__&#39;,
+ &#39;__delattr__&#39;,
+ &#39;__dir__&#39;,
+ &#39;__doc__&#39;,
+ &#39;__eq__&#39;,
+ &#39;__format__&#39;,
+ &#39;__ge__&#39;,
+ &#39;__getattribute__&#39;,
+ &#39;__gt__&#39;,
+ &#39;__hash__&#39;,
+ &#39;__init__&#39;,
+ &#39;__init_subclass__&#39;,
+ &#39;__le__&#39;,
+ &#39;__lt__&#39;,
+ &#39;__ne__&#39;,
+ &#39;__new__&#39;,
+ &#39;__reduce__&#39;,
+ &#39;__reduce_ex__&#39;,
+ &#39;__repr__&#39;,
+ &#39;__setattr__&#39;,
+ &#39;__sizeof__&#39;,
+ &#39;__str__&#39;,
+ &#39;__subclasshook__&#39;,
+ &#39;_register_hook_dict&#39;,
+ &#39;metadata&#39;,
+ &#39;name&#39;,
+ &#39;next_functions&#39;,
+ &#39;register_hook&#39;,
+ &#39;requires_grad&#39;]
+</pre></div>
+
+
+<p>继续深挖</p>
+<div class="codehilite"><pre><span></span><span class="n">x_leaf</span><span class="o">=</span><span class="n">xg</span><span class="o">.</span><span class="n">next_functions</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+<span class="nb">type</span><span class="p">(</span><span class="n">x_leaf</span><span class="p">)</span>
+</pre></div>
+
+<div class="codehilite"><pre><span></span>AccumulateGrad
+</pre></div>
+
+
+<p>在PyTorch的反向图计算中，<code>AccumulateGrad</code>类型代表的就是叶子节点类型，也就是计算图终止节点。<code>AccumulateGrad</code>类中有一个<code>.variable</code>属性指向叶子节点。</p>
+<div class="codehilite"><pre><span></span><span class="n">x_leaf</span><span class="o">.</span><span class="n">variable</span>
+</pre></div>
+
+<div class="codehilite"><pre><span></span>tensor([[0.1044, 0.6777, 0.2780, 0.5005, 0.4966],
+        [0.6328, 0.0611, 0.4004, 0.5564, 0.3631],
+        [0.5526, 0.1290, 0.9003, 0.0772, 0.1823],
+        [0.9428, 0.6148, 0.9530, 0.4657, 0.0324],
+        [0.2976, 0.8095, 0.4215, 0.9606, 0.0161]], requires_grad=True)
+</pre></div>
+
+
+<p>这个<code>.variable</code>的属性就是我们的生成的变量<code>x</code></p>
+<div class="codehilite"><pre><span></span><span class="k">print</span><span class="p">(</span><span class="s2">&quot;x_leaf.variable的id:&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="nb">id</span><span class="p">(</span><span class="n">x_leaf</span><span class="o">.</span><span class="n">variable</span><span class="p">)))</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;x的id:&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="nb">id</span><span class="p">(</span><span class="n">x</span><span class="p">)))</span>
+</pre></div>
+
+<div class="codehilite"><pre><span></span>x_leaf.variable的id:4840553424
+x的id:4840553424
+</pre></div>
+
+
+<div class="codehilite"><pre><span></span><span class="k">assert</span><span class="p">(</span><span class="nb">id</span><span class="p">(</span><span class="n">x_leaf</span><span class="o">.</span><span class="n">variable</span><span class="p">)</span><span class="o">==</span><span class="nb">id</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+</pre></div>
+
+<p>这样整个规程就很清晰了：</p>
+<ol>
+<li>当我们执行z.backward()的时候。这个操作将调用z里面的grad_fn这个属性，执行求导的操作。</li>
+<li>这个操作将遍历grad_fn的next_functions，然后分别取出里面的Function（AccumulateGrad），执行求导操作。这部分是一个递归的过程直到最后类型为叶子节点。</li>
+<li>计算出结果以后，将结果保存到他们对应的variable 这个变量所引用的对象（x和y）的 grad这个属性里面。</li>
+<li>求导结束。所有的叶节点的grad变量都得到了相应的更新</li>
+</ol>
+<p>最终当我们执行完c.backward()之后，a和b里面的grad值就得到了更新。</p>
+<h2 id="autograd_2">扩展Autograd<a class="headerlink" href="#autograd_2" title="Permanent link">&para;</a></h2>
+<p>如果需要自定义autograd扩展新的功能，就需要扩展Function类。因为Function使用autograd来计算结果和梯度，并对操作历史进行编码。
+在Function类中最主要的方法就是<code>forward()</code>和<code>backward()</code>他们分别代表了前向传播和反向传播。</p>
+<p>一个自定义的Function需要一下三个方法：</p>
+<div class="codehilite"><pre><span></span>__init__ (optional)：如果这个操作需要额外的参数则需要定义这个Function的构造函数，不需要的话可以忽略。
+
+forward()：执行前向传播的计算代码
+
+backward()：反向传播时梯度计算的代码。 参数的个数和forward返回值的个数一样，每个参数代表传回到此操作的梯度。
+</pre></div>
+
+
+<div class="codehilite"><pre><span></span><span class="c1"># 引入Function便于扩展</span>
+<span class="kn">from</span> <span class="nn">torch.autograd.function</span> <span class="kn">import</span> <span class="n">Function</span>
+</pre></div>
+
+<div class="codehilite"><pre><span></span><span class="c1"># 定义一个乘以常数的操作(输入参数是张量)</span>
+<span class="c1"># 方法必须是静态方法，所以要加上@staticmethod </span>
+<span class="k">class</span> <span class="nc">MulConstant</span><span class="p">(</span><span class="n">Function</span><span class="p">):</span>
+    <span class="nd">@staticmethod</span> 
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span> <span class="n">tensor</span><span class="p">,</span> <span class="n">constant</span><span class="p">):</span>
+        <span class="c1"># ctx 用来保存信息这里类似self，并且ctx的属性可以在backward中调用</span>
+        <span class="n">ctx</span><span class="o">.</span><span class="n">constant</span><span class="o">=</span><span class="n">constant</span>
+        <span class="k">return</span> <span class="n">tensor</span> <span class="o">*</span><span class="n">constant</span>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">backward</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span> <span class="n">grad_output</span><span class="p">):</span>
+        <span class="c1"># 返回的参数要与输入的参数一样.</span>
+        <span class="c1"># 第一个输入为3x3的张量，第二个为一个常数</span>
+        <span class="c1"># 常数的梯度必须是 None.</span>
+        <span class="k">return</span> <span class="n">grad_output</span><span class="p">,</span> <span class="bp">None</span> 
+</pre></div>
+
+<p>定义完我们的新操作后，我们来进行测试</p>
+<div class="codehilite"><pre><span></span><span class="n">a</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="n">requires_grad</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">b</span><span class="o">=</span><span class="n">MulConstant</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;a:&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">a</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;b:&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">b</span><span class="p">))</span> <span class="c1"># b为a的元素乘以5</span>
+</pre></div>
+
+<div class="codehilite"><pre><span></span>a:tensor([[0.0118, 0.1434, 0.8669],
+        [0.1817, 0.8904, 0.5852],
+        [0.7364, 0.5234, 0.9677]], requires_grad=True)
+b:tensor([[0.0588, 0.7169, 4.3347],
+        [0.9084, 4.4520, 2.9259],
+        [3.6820, 2.6171, 4.8386]], grad_fn=&lt;MulConstantBackward&gt;)
+</pre></div>
+
+
+<p>反向传播，返回值不是标量，所以<code>backward</code>方法需要参数</p>
+<div class="codehilite"><pre><span></span><span class="n">b</span><span class="o">.</span><span class="n">backward</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">a</span><span class="p">))</span>
+</pre></div>
+
+<div class="codehilite"><pre><span></span><span class="n">a</span><span class="o">.</span><span class="n">grad</span>
+</pre></div>
+
+<div class="codehilite"><pre><span></span>tensor([[1., 1., 1.],
+        [1., 1., 1.],
+        [1., 1., 1.]])
+</pre></div>
+
+
+<p>梯度因为1</p>
+                
+                  
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid">
+        
+          <a href="../2_1_1_pytorch-basics-tensor/" title="2.1.1 Tensor" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
+            </div>
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  上一页
+                </span>
+                2.1.1 Tensor
+              </span>
+            </div>
+          </a>
+        
+        
+          <a href="../2_1_3_pytorch-basics-nerual-network/" title="2.1.3 Nerual Network" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  下一页
+                </span>
+                2.1.3 Nerual Network
+              </span>
+            </div>
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+          <div class="md-footer-copyright__highlight">
+            Copyright &copy; 2019 <a href="https://github.com/becauseofAI">becauseofAI</a>, Maintained by the <a href="https://github.com/becauseofAI">becauseofAI</a>.
+          </div>
+        
+        powered by
+        <a href="https://www.mkdocs.org">MkDocs</a>
+        and
+        <a href="https://squidfunk.github.io/mkdocs-material/">
+          Material for MkDocs</a>
+      </div>
+      
+  <div class="md-footer-social">
+    <link rel="stylesheet" href="../../../assets/fonts/font-awesome.css">
+    
+      <a href="https://github.com/becauseofAI" class="md-footer-social__link fa fa-github"></a>
+    
+  </div>
+
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../../../assets/javascripts/application.245445c6.js"></script>
+      
+        
+        
+          
+          <script src="../../../assets/javascripts/lunr/lunr.stemmer.support.js"></script>
+          
+            
+              
+                <script src="../../../assets/javascripts/lunr/tinyseg.js"></script>
+              
+              
+                <script src="../../../assets/javascripts/lunr/lunr.ja.js"></script>
+              
+            
+          
+          
+        
+      
+      <script>app.initialize({version:"1.0.4",url:{base:"../../.."}})</script>
+      
+        <script src="../../../js/extra.js"></script>
+      
+        <script src="../../../js/baidu-tongji.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+      
+    
+  </body>
+</html>
