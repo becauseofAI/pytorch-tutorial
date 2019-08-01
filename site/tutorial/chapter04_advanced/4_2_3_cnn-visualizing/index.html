@@ -1,0 +1,1351 @@
+
+
+
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      
+        <meta name="description" content="PyTorch Tutorial for Deep Learning Research and Product.">
+      
+      
+        <link rel="canonical" href="https://becauseofAI.github.io/pytorch-tutorial/tutorial/chapter04_advanced/4_2_3_cnn-visualizing/">
+      
+      
+        <meta name="author" content="becauseofAI">
+      
+      
+        <meta name="lang:clipboard.copy" content="复制">
+      
+        <meta name="lang:clipboard.copied" content="已复制">
+      
+        <meta name="lang:search.language" content="ja">
+      
+        <meta name="lang:search.pipeline.stopwords" content="True">
+      
+        <meta name="lang:search.pipeline.trimmer" content="True">
+      
+        <meta name="lang:search.result.none" content="没有找到符合条件的结果">
+      
+        <meta name="lang:search.result.one" content="找到 1 个符合条件的结果">
+      
+        <meta name="lang:search.result.other" content="# 个符合条件的结果">
+      
+        <meta name="lang:search.tokenizer" content="[\uff0c\u3002]+">
+      
+      <link rel="shortcut icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.4.0">
+    
+    
+      
+        <title>CNN Visualizing - PyTorch Tutorial</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/application.0284f74d.css">
+      
+        <link rel="stylesheet" href="../../../assets/stylesheets/application-palette.01803549.css">
+      
+      
+        
+        
+        <meta name="theme-color" content="#ef5350">
+      
+    
+    
+      <script src="../../../assets/javascripts/modernizr.74668098.js"></script>
+    
+    
+      
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700|Roboto+Mono&display=fallback">
+        <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
+      
+    
+    <link rel="stylesheet" href="../../../assets/fonts/material-icons.css">
+    
+    
+      <link rel="stylesheet" href="../../../css/extra.css">
+    
+    
+      
+        
+<script>
+  window.ga = window.ga || function() {
+    (ga.q = ga.q || []).push(arguments)
+  }
+  ga.l = +new Date
+  /* Setup integration and send page view */
+  ga("create", "UA-27795084-5", "mkdocs.org")
+  ga("set", "anonymizeIp", true)
+  ga("send", "pageview")
+  /* Register handler to log search on blur */
+  document.addEventListener("DOMContentLoaded", () => {
+    if (document.forms.search) {
+      var query = document.forms.search.query
+      query.addEventListener("blur", function() {
+        if (this.value) {
+          var path = document.location.pathname;
+          ga("send", "pageview", path + "?q=" + this.value)
+        }
+      })
+    }
+  })
+</script>
+<script async src="https://www.google-analytics.com/analytics.js"></script>
+      
+    
+    
+  </head>
+  
+    
+    
+    <body dir="ltr" data-md-color-primary="red" data-md-color-accent="indigo">
+  
+    <svg class="md-svg">
+      <defs>
+        
+        
+          <svg xmlns="http://www.w3.org/2000/svg" width="416" height="448" viewBox="0 0 416 448" id="__github"><path fill="currentColor" d="M160 304q0 10-3.125 20.5t-10.75 19T128 352t-18.125-8.5-10.75-19T96 304t3.125-20.5 10.75-19T128 256t18.125 8.5 10.75 19T160 304zm160 0q0 10-3.125 20.5t-10.75 19T288 352t-18.125-8.5-10.75-19T256 304t3.125-20.5 10.75-19T288 256t18.125 8.5 10.75 19T320 304zm40 0q0-30-17.25-51T296 232q-10.25 0-48.75 5.25Q229.5 240 208 240t-39.25-2.75Q130.75 232 120 232q-29.5 0-46.75 21T56 304q0 22 8 38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0 37.25-1.75t35-7.375 30.5-15 20.25-25.75T360 304zm56-44q0 51.75-15.25 82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5T212 416q-19.5 0-35.5-.75t-36.875-3.125-38.125-7.5-34.25-12.875T37 371.5t-21.5-28.75Q0 312 0 260q0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25 30.875Q171.5 96 212 96q37 0 70 8 26.25-20.5 46.75-30.25T376 64q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34 99.5z"/></svg>
+        
+      </defs>
+    </svg>
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
+    
+      <a href="#423" tabindex="1" class="md-skip">
+        跳转至
+      </a>
+    
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <a href="https://becauseofAI.github.io/pytorch-tutorial/" title="PyTorch Tutorial" class="md-header-nav__button md-logo">
+          
+            <i class="md-icon"></i>
+          
+        </a>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="__drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+          
+            <span class="md-header-nav__topic">
+              PyTorch Tutorial
+            </span>
+            <span class="md-header-nav__topic">
+              
+                CNN Visualizing
+              
+            </span>
+          
+        </div>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+          <label class="md-icon md-icon--search md-header-nav__button" for="__search"></label>
+          
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query" data-md-state="active">
+      <label class="md-icon md-search__icon" for="__search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset" tabindex="-1">
+        &#xE5CD;
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta">
+            键入以开始搜索
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+        
+      </div>
+      
+        <div class="md-flex__cell md-flex__cell--shrink">
+          <div class="md-header-nav__source">
+            
+
+
+  
+
+<a href="https://github.com/becauseofAI/pytorch-tutorial/" title="前往 Github 仓库" class="md-source" data-md-source="github">
+  
+    <div class="md-source__icon">
+      <svg viewBox="0 0 24 24" width="24" height="24">
+        <use xlink:href="#__github" width="24" height="24"></use>
+      </svg>
+    </div>
+  
+  <div class="md-source__repository">
+    pytorch-tutorial
+  </div>
+</a>
+          </div>
+        </div>
+      
+    </div>
+  </nav>
+</header>
+    
+    <div class="md-container">
+      
+        
+      
+      
+      <main class="md-main">
+        <div class="md-main__inner md-grid" data-md-component="container">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="__drawer">
+    <a href="https://becauseofAI.github.io/pytorch-tutorial/" title="PyTorch Tutorial" class="md-nav__button md-logo">
+      
+        <i class="md-icon"></i>
+      
+    </a>
+    PyTorch Tutorial
+  </label>
+  
+    <div class="md-nav__source">
+      
+
+
+  
+
+<a href="https://github.com/becauseofAI/pytorch-tutorial/" title="前往 Github 仓库" class="md-source" data-md-source="github">
+  
+    <div class="md-source__icon">
+      <svg viewBox="0 0 24 24" width="24" height="24">
+        <use xlink:href="#__github" width="24" height="24"></use>
+      </svg>
+    </div>
+  
+  <div class="md-source__repository">
+    pytorch-tutorial
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../../.." title="Introduction" class="md-nav__link">
+      Introduction
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2" checked>
+    
+    <label class="md-nav__link" for="nav-2">
+      Tutorials
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-2">
+        Tutorials
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2-1" type="checkbox" id="nav-2-1">
+    
+    <label class="md-nav__link" for="nav-2-1">
+      Ghapter01 Getting Started
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-2-1">
+        Ghapter01 Getting Started
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../chapter01_getting-started/1_1_pytorch-introduction/" title="1.1 PyTorch Tntroduction" class="md-nav__link">
+      1.1 PyTorch Tntroduction
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2-1-2" type="checkbox" id="nav-2-1-2">
+    
+    <label class="md-nav__link" for="nav-2-1-2">
+      1.3 PyTorch 60 Minute Blitz
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="3">
+      <label class="md-nav__title" for="nav-2-1-2">
+        1.3 PyTorch 60 Minute Blitz
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../chapter01_getting-started/1_3_1_tensor_tutorial/" title="1.3.1 Tensor" class="md-nav__link">
+      1.3.1 Tensor
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../chapter01_getting-started/1_3_2_autograd_tutorial/" title="1.3.2 Autograd" class="md-nav__link">
+      1.3.2 Autograd
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../chapter01_getting-started/1_3_3_neural_networks_tutorial/" title="1.3.3 Neural Networks" class="md-nav__link">
+      1.3.3 Neural Networks
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../chapter01_getting-started/1_3_4_cifar10_tutorial/" title="1.3.4 Classifier" class="md-nav__link">
+      1.3.4 Classifier
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../chapter01_getting-started/1_3_5_data_parallel_tutorial/" title="1.3.5 Data Parallelism" class="md-nav__link">
+      1.3.5 Data Parallelism
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2-2" type="checkbox" id="nav-2-2">
+    
+    <label class="md-nav__link" for="nav-2-2">
+      Ghapter02 Basics
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-2-2">
+        Ghapter02 Basics
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2-2-1" type="checkbox" id="nav-2-2-1">
+    
+    <label class="md-nav__link" for="nav-2-2-1">
+      2.1 Basic
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="3">
+      <label class="md-nav__title" for="nav-2-2-1">
+        2.1 Basic
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../chapter02_basics/2_1_1_pytorch-basics-tensor/" title="2.1.1 Tensor" class="md-nav__link">
+      2.1.1 Tensor
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../chapter02_basics/2_1_2_pytorch-basics-autograd/" title="2.1.2 AutoGrad" class="md-nav__link">
+      2.1.2 AutoGrad
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../chapter02_basics/2_1_3_pytorch-basics-nerual-network/" title="2.1.3 Nerual Network" class="md-nav__link">
+      2.1.3 Nerual Network
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../chapter02_basics/2_1_4_pytorch-basics-data-loader/" title="2.1.4 Data Loader" class="md-nav__link">
+      2.1.4 Data Loader
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../chapter02_basics/2_2_deep-learning-mathematics-basic/" title="2.2 Deep Learning Mathematics Basic" class="md-nav__link">
+      2.2 Deep Learning Mathematics Basic
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../chapter02_basics/2_3_deep-learning-neural-network-introduction/" title="2.3 Deep Learning Neural Network Introduction" class="md-nav__link">
+      2.3 Deep Learning Neural Network Introduction
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../chapter02_basics/2_4_convolutional-neural-network/" title="2.4 Convolutional Neural Network" class="md-nav__link">
+      2.4 Convolutional Neural Network
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../chapter02_basics/2_5_recurrent-neural-network/" title="2.5 Recurrent Neural Network" class="md-nav__link">
+      2.5 Recurrent Neural Network
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2-3" type="checkbox" id="nav-2-3">
+    
+    <label class="md-nav__link" for="nav-2-3">
+      Ghapter03 Intermediate
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-2-3">
+        Ghapter03 Intermediate
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../chapter03_intermediate/3_1_logistic-regression/" title="3.1 Logistic Regression" class="md-nav__link">
+      3.1 Logistic Regression
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2-3-2" type="checkbox" id="nav-2-3-2">
+    
+    <label class="md-nav__link" for="nav-2-3-2">
+      3.2 CNN
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="3">
+      <label class="md-nav__title" for="nav-2-3-2">
+        3.2 CNN
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../chapter03_intermediate/3_2_1_cnn_convnet_mnist/" title="3.2.1 ConvNet Mnist" class="md-nav__link">
+      3.2.1 ConvNet Mnist
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../chapter03_intermediate/3_2_2_cnn_resnet_cifar10/" title="3.2.2 ResNet_Cifar10" class="md-nav__link">
+      3.2.2 ResNet_Cifar10
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../chapter03_intermediate/3_3_rnn/" title="3.3 RNN" class="md-nav__link">
+      3.3 RNN
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2-4" type="checkbox" id="nav-2-4" checked>
+    
+    <label class="md-nav__link" for="nav-2-4">
+      Ghapter04 Advanced
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-2-4">
+        Ghapter04 Advanced
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../4_1_fine-tuning/" title="Fine Tuning" class="md-nav__link">
+      Fine Tuning
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2-4-2" type="checkbox" id="nav-2-4-2" checked>
+    
+    <label class="md-nav__link" for="nav-2-4-2">
+      Visualization
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="3">
+      <label class="md-nav__title" for="nav-2-4-2">
+        Visualization
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../4_2_1_visdom/" title="Visdom" class="md-nav__link">
+      Visdom
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../4_2_2_tensorboardx/" title="TensorBoardX" class="md-nav__link">
+      TensorBoardX
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        CNN Visualizing
+      </label>
+    
+    <a href="./" title="CNN Visualizing" class="md-nav__link md-nav__link--active">
+      CNN Visualizing
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">目录</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" title="背景" class="md-nav__link">
+    背景
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#deconvolution" title="基于Deconvolution的方法" class="md-nav__link">
+    基于Deconvolution的方法
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../4_3_multiply-gpu-parallel-training/" title="Parallel" class="md-nav__link">
+      Parallel
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../4_4_fastai/" title="FastAI" class="md-nav__link">
+      FastAI
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2-5" type="checkbox" id="nav-2-5">
+    
+    <label class="md-nav__link" for="nav-2-5">
+      Ghapter05 Application
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-2-5">
+        Ghapter05 Application
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../chapter05_application/5_1_kaggle/" title="5.1 Kaggle" class="md-nav__link">
+      5.1 Kaggle
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../chapter05_application/readme/" title="5.2 结构化数据" class="md-nav__link">
+      5.2 结构化数据
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2-5-3" type="checkbox" id="nav-2-5-3">
+    
+    <label class="md-nav__link" for="nav-2-5-3">
+      5.3 Computer Vision
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="3">
+      <label class="md-nav__title" for="nav-2-5-3">
+        5.3 Computer Vision
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../chapter05_application/readme/" title="Detection" class="md-nav__link">
+      Detection
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../chapter05_application/readme/" title="Segmentation" class="md-nav__link">
+      Segmentation
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../chapter05_application/readme/" title="Recognition" class="md-nav__link">
+      Recognition
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../chapter05_application/readme/" title="GAN" class="md-nav__link">
+      GAN
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../chapter05_application/readme/" title="Others" class="md-nav__link">
+      Others
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../chapter05_application/readme/" title="5.4 自然语言处理" class="md-nav__link">
+      5.4 自然语言处理
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../chapter05_application/readme/" title="5.5 协同过滤" class="md-nav__link">
+      5.5 协同过滤
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../../../about/" title="About" class="md-nav__link">
+      About
+    </a>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">目录</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" title="背景" class="md-nav__link">
+    背景
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#deconvolution" title="基于Deconvolution的方法" class="md-nav__link">
+    基于Deconvolution的方法
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                <div class="codehilite"><pre><span></span><span class="o">%</span><span class="n">load_ext</span> <span class="n">autoreload</span>
+<span class="o">%</span><span class="n">autoreload</span> <span class="mi">2</span>
+<span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">torch.nn</span> <span class="kn">as</span> <span class="nn">nn</span>
+<span class="kn">import</span> <span class="nn">torch.nn.functional</span> <span class="kn">as</span> <span class="nn">F</span>
+<span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
+<span class="kn">from</span> <span class="nn">torchvision</span> <span class="kn">import</span> <span class="n">transforms</span>
+<span class="kn">from</span> <span class="nn">torchvision</span> <span class="kn">import</span> <span class="n">models</span><span class="p">,</span><span class="n">datasets</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+<span class="n">torch</span><span class="o">.</span><span class="n">__version__</span>
+</pre></div>
+
+<div class="codehilite"><pre><span></span>&#39;1.0.0&#39;
+</pre></div>
+
+
+<h1 id="423">4.2.3 可视化理解卷积神经网络<a class="headerlink" href="#423" title="Permanent link">&para;</a></h1>
+<p>在上一节中我们已经通过一个预训练的VGG16模型对一张图片进行了分类，下面我们粘贴上一节的代码：</p>
+<div class="codehilite"><pre><span></span><span class="n">cat_img</span><span class="o">=</span><span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;img/1280px-Felis_silvestris_catus_lying_on_rice_straw.jpg&#39;</span><span class="p">)</span>
+<span class="n">transform_224</span><span class="o">=</span> <span class="n">transforms</span><span class="o">.</span><span class="n">Compose</span><span class="p">([</span>
+    <span class="n">transforms</span><span class="o">.</span><span class="n">Resize</span><span class="p">(</span><span class="mi">224</span><span class="p">),</span> 
+    <span class="n">transforms</span><span class="o">.</span><span class="n">CenterCrop</span><span class="p">((</span><span class="mi">224</span><span class="p">,</span><span class="mi">224</span><span class="p">)),</span>
+    <span class="n">transforms</span><span class="o">.</span><span class="n">ToTensor</span><span class="p">(),</span>
+    <span class="n">transforms</span><span class="o">.</span><span class="n">Normalize</span><span class="p">(</span><span class="n">mean</span><span class="o">=</span><span class="p">[</span><span class="mf">0.485</span><span class="p">,</span> <span class="mf">0.456</span><span class="p">,</span> <span class="mf">0.406</span><span class="p">],</span>
+                                <span class="n">std</span><span class="o">=</span><span class="p">[</span><span class="mf">0.229</span><span class="p">,</span> <span class="mf">0.224</span><span class="p">,</span> <span class="mf">0.225</span><span class="p">])</span>
+<span class="p">])</span>
+
+<span class="n">cat_img_224</span><span class="o">=</span><span class="n">transform_224</span><span class="p">(</span><span class="n">cat_img</span><span class="p">)</span>
+</pre></div>
+
+<p>上面的代码是我们读取了一张图片，并对图片进行了一些预处理，下面我们来创建vgg16的预训练好网络模型：</p>
+<div class="codehilite"><pre><span></span><span class="n">net</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">vgg16</span><span class="p">(</span><span class="n">pretrained</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span><span class="c1"># 修改这里可以更换其他与训练的模型</span>
+<span class="n">inputs</span><span class="o">=</span><span class="n">cat_img_224</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span> <span class="c1">#这两个方法都可以cat_img_224[None,::]</span>
+</pre></div>
+
+<p>进行一次前向的传播，看看得到了什么结果：</p>
+<div class="codehilite"><pre><span></span><span class="n">out</span> <span class="o">=</span> <span class="n">net</span><span class="p">(</span><span class="n">inputs</span><span class="p">)</span>
+<span class="n">_</span><span class="p">,</span> <span class="n">preds</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">out</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">preds</span>
+<span class="n">label</span><span class="o">=</span><span class="n">preds</span><span class="o">.</span><span class="n">numpy</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">label</span>
+</pre></div>
+
+<div class="codehilite"><pre><span></span>287
+</pre></div>
+
+
+<p>我们看到了，这里返回的是285，代码几乎一样，但是返回的结果与上一节的样例有差别，这是什么原因呢？
+首先我们先看一下这个数字的含义，我们使用的是通过imagenet来作为预训练的模型，imagenet里面有1000个分类，我们如何去找这个含义呢？
+有好心人已经给我们准备好了 <a href="https://gist.githubusercontent.com/yrevar/942d3a0ac09ec9e5eb3a/raw/c2c91c8e767d04621020c30ed31192724b863041/imagenet1000_clsid_to_human.txt">这个连接</a>
+我们找一下 285: 'Egyptian cat', 说明识别出了是一只猫，种类还是埃及猫，应该还是比较准确的，但是这张图片是我特意寻找的，里面包含了很多隐藏的细节，这里就不多介绍了，大家如果有兴趣，可以换一个模型，或者修改下transforms方法，看看模型都会识别出来是什么类别。</p>
+<p>注：不同的预训练权重也会出现不同的结果，我测试出现过277，282，287等结果</p>
+<p>下面我们开始进入正题，卷积神经网络的可视化。</p>
+<h2 id="_1">背景<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<p>CNN模型虽然在图像处理上表现出非常良好的性能和准确性，但一直以来都被认为是一个黑盒模型，人们无法了解里面的工作机制。
+针对这个问题，研究人员除了从理论层面去寻找解释外，也提出了一些可视化的方法直观地理解CNN的内部机理，毕竟眼见为实，看到了大家就相信了。
+这里介绍两类方法，一种是基于Deconvolution, 另一种则是基于反向传播的方法。我们主要使用代码实现基于反向传播的方法的可视化。</p>
+<h2 id="deconvolution">基于Deconvolution的方法<a class="headerlink" href="#deconvolution" title="Permanent link">&para;</a></h2>
+<p><a href="https://arxiv.org/abs/1311.2901">Visualizing and Understanding Convolutional Networks</a> 
+主要是将激活函数的特征映射回像素空间，来揭示什么样的输入模式能够产生特定的输出,因为网络是有层级关系的，所以越靠近输出的层级学到的特征越抽象，与实际任务越相关，这里就不多介绍了，<a href="https://github.com/saketd403/Visualizing-and-Understanding-Convolutional-neural-networks">这里</a>有一个使用 keras的实现，有兴趣的可以看看。</p>
+<h1 id="backpropagation">基于Backpropagation的方法<a class="headerlink" href="#backpropagation" title="Permanent link">&para;</a></h1>
+<p>另外一类的实现就是基于Backpropagation的方法，这里我们主要进行介绍，在介绍之前，我们首先要引用一下别人写的代码
+<a href="https://github.com/utkuozbulak/pytorch-cnn-visualizations">pytorch-cnn-visualizations </a>,将这个代码的src目录放到与这个notebook同级别目录下，我们后面会直接调用他的代码进行演示操作。</p>
+<p>首先，我们做一些准备工作：</p>
+<div class="codehilite"><pre><span></span><span class="kn">import</span> <span class="nn">sys</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;./src/&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">rgb2gray</span><span class="p">(</span><span class="n">rgb</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">rgb</span><span class="p">[</span><span class="o">...</span><span class="p">,:</span><span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.299</span><span class="p">,</span> <span class="mf">0.587</span><span class="p">,</span> <span class="mf">0.114</span><span class="p">])</span>
+<span class="k">def</span> <span class="nf">rescale_grads</span><span class="p">(</span><span class="nb">map</span><span class="p">,</span><span class="n">gradtype</span><span class="o">=</span><span class="s2">&quot;all&quot;</span><span class="p">):</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">gradtype</span><span class="o">==</span><span class="s2">&quot;pos&quot;</span><span class="p">):</span>    
+        <span class="nb">map</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">map</span><span class="p">)</span> <span class="o">/</span> <span class="nb">map</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
+    <span class="k">elif</span> <span class="n">gradtype</span><span class="o">==</span><span class="s2">&quot;neg&quot;</span><span class="p">:</span>
+        <span class="nb">map</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="nb">map</span><span class="p">)</span> <span class="o">/</span> <span class="o">-</span><span class="nb">map</span><span class="o">.</span><span class="n">min</span><span class="p">())</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">map</span> <span class="o">=</span> <span class="nb">map</span> <span class="o">-</span> <span class="nb">map</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
+        <span class="nb">map</span> <span class="o">/=</span> <span class="nb">map</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+    <span class="k">return</span> <span class="nb">map</span>
+</pre></div>
+
+<h3 id="guided-backpropagation">Guided-Backpropagation<a class="headerlink" href="#guided-backpropagation" title="Permanent link">&para;</a></h3>
+<p>这个方法来自于ICLR-2015 的文章<a href="https://arxiv.org/abs/1412.6806">《Striving for Simplicity: The All Convolutional Net》</a>，文中提出了使用stride convolution 替代pooling 操作，这样整个结构都只有卷积操作。作者为了研究这种结构的有效性，提出了guided-backpropagation的方法。</p>
+<p>大致的方法为：选择某一种输出模式，然后通过反向传播计算输出对输入的梯度。这种方式与上一种deconvnet的方式的唯一区别在于对ReLU梯度的处理。</p>
+<p>ReLU在反向传播的计算采用的前向传播的特征作为门阀，而deconvnet采用的是梯度值，guided-backpropagation则将两者组合在一起使用，这样有助于得到的重构都是正数。</p>
+<p>这段话可能有点绕，具体细节还是看论文吧,我们这里只关注如何实现。</p>
+<div class="codehilite"><pre><span></span><span class="n">inputs</span><span class="o">.</span><span class="n">requires_grad</span><span class="o">=</span><span class="bp">True</span> <span class="c1"># 这句话必须要有，否则会报错</span>
+<span class="kn">from</span> <span class="nn">guided_backprop</span> <span class="kn">import</span> <span class="n">GuidedBackprop</span> <span class="c1">#这里直接引用写好的方法，在src，目录找想对应的文件</span>
+<span class="n">GB</span><span class="o">=</span><span class="n">GuidedBackprop</span><span class="p">(</span><span class="n">net</span><span class="p">)</span>
+<span class="n">gp_grads</span><span class="o">=</span><span class="n">GB</span><span class="o">.</span><span class="n">generate_gradients</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="n">label</span><span class="p">)</span>
+<span class="n">gp_grads</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">moveaxis</span><span class="p">(</span><span class="n">gp_grads</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<span class="c1">#我们分别计算三类的gp</span>
+<span class="n">ag</span><span class="o">=</span><span class="n">rescale_grads</span><span class="p">(</span><span class="n">gp_grads</span><span class="p">,</span><span class="n">gradtype</span><span class="o">=</span><span class="s2">&quot;all&quot;</span><span class="p">)</span>
+<span class="n">pg</span><span class="o">=</span><span class="n">rescale_grads</span><span class="p">(</span><span class="n">gp_grads</span><span class="p">,</span><span class="n">gradtype</span><span class="o">=</span><span class="s2">&quot;pos&quot;</span><span class="p">)</span>
+<span class="n">ng</span><span class="o">=</span><span class="n">rescale_grads</span><span class="p">(</span><span class="n">gp_grads</span><span class="p">,</span><span class="n">gradtype</span><span class="o">=</span><span class="s2">&quot;neg&quot;</span><span class="p">)</span>
+</pre></div>
+
+<p>下面我们使用matplotlib看看结果：</p>
+<div class="codehilite"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">cat_img</span><span class="p">)</span>
+</pre></div>
+
+<div class="codehilite"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x23d840392e8&gt;
+</pre></div>
+
+
+<p><img alt="png" src="../img/4_2_3_cnn-visualizing_15_1.png" /></p>
+<div class="codehilite"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">ag</span><span class="p">)</span>
+</pre></div>
+
+<div class="codehilite"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x23d8441c7f0&gt;
+</pre></div>
+
+
+<p><img alt="png" src="../img/4_2_3_cnn-visualizing_16_1.png" /></p>
+<div class="codehilite"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">ng</span><span class="p">)</span>
+</pre></div>
+
+<div class="codehilite"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x23d84487080&gt;
+</pre></div>
+
+
+<p><img alt="png" src="../img/4_2_3_cnn-visualizing_17_1.png" /></p>
+<div class="codehilite"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">ag</span><span class="p">)</span>
+</pre></div>
+
+<div class="codehilite"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x23d854b44e0&gt;
+</pre></div>
+
+
+<p><img alt="png" src="../img/4_2_3_cnn-visualizing_18_1.png" /></p>
+<p>上面三张图是rbg三个通道的展示结果，下面我们合并成一个通道再看一下：</p>
+<div class="codehilite"><pre><span></span><span class="n">gag</span><span class="o">=</span><span class="n">rgb2gray</span><span class="p">(</span><span class="n">ag</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">gag</span><span class="p">)</span>
+</pre></div>
+
+<div class="codehilite"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x23d8550fe80&gt;
+</pre></div>
+
+
+<p><img alt="png" src="../img/4_2_3_cnn-visualizing_20_1.png" /></p>
+<div class="codehilite"><pre><span></span><span class="n">gpg</span><span class="o">=</span><span class="n">rgb2gray</span><span class="p">(</span><span class="n">pg</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">gpg</span><span class="p">)</span>
+</pre></div>
+
+<div class="codehilite"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x23d85576710&gt;
+</pre></div>
+
+
+<p><img alt="png" src="../img/4_2_3_cnn-visualizing_21_1.png" /></p>
+<div class="codehilite"><pre><span></span><span class="n">gng</span><span class="o">=</span><span class="n">rgb2gray</span><span class="p">(</span><span class="n">ng</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">gng</span><span class="p">)</span>
+</pre></div>
+
+<div class="codehilite"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x23d855d4fd0&gt;
+</pre></div>
+
+
+<p><img alt="png" src="../img/4_2_3_cnn-visualizing_22_1.png" /></p>
+<h3 id="camclass-activation-map">CAM（Class Activation Map）<a class="headerlink" href="#camclass-activation-map" title="Permanent link">&para;</a></h3>
+<p>这个方法严格来说不是基于梯度的，但是后面我们会将反向传播与CAM整合，所以简单的对CAM做个说明。</p>
+<p>CAM 来自CVPR 2016 <a href="https://arxiv.org/abs/1512.04150">《Learning Deep Features for Discriminative Localization》</a>，作者在研究global average pooling（GAP）时，发现GAP不止作为一种正则，减轻过拟合，在稍加改进后，可以使得CNN具有定位的能力，CAM（class activation map）是指输入中的什么区域能够指示CNN进行正确的识别。</p>
+<p>通常特征图上每个位置的值在存在其感知野里面某种模式时被激活，最后的class activation map是这些模式的线性组合，我们可以通过上采样，将class activation map 还原到与原图一样的大小，通过叠加，我们就可以知道哪些区域是与最后分类结果息息相关的部分。</p>
+<p>这里就不介绍了。</p>
+<h3 id="grad-cam">Grad-CAM<a class="headerlink" href="#grad-cam" title="Permanent link">&para;</a></h3>
+<p><a href="https://arxiv.org/abs/1610.02391">Grad-CAM: Visual Explanations from Deep Networks via Gradient-based Localization</a></p>
+<p>顾名思义 Grad-CAM的加权系数是通过反向传播得到的，而CAM的特征加权系数是分类器的权值。</p>
+<p>Grad-CAM 与 CAM相比，它的优点是适用的范围更广，Grad-CAM对各类结构，各种任务都可以使用。这两种方法也可以应用于进行弱监督下的目标检测，后续也有相关工作基于它们进行改进来做弱监督目标检测。 </p>
+<div class="codehilite"><pre><span></span><span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">from</span> <span class="nn">gradcam</span> <span class="kn">import</span> <span class="n">GradCam</span>
+<span class="kn">from</span> <span class="nn">guided_gradcam</span> <span class="kn">import</span> <span class="n">guided_grad_cam</span>
+<span class="kn">from</span> <span class="nn">guided_backprop</span> <span class="kn">import</span> <span class="n">GuidedBackprop</span>
+<span class="n">nlayers</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">net</span><span class="o">.</span><span class="n">features</span><span class="o">.</span><span class="n">_modules</span><span class="o">.</span><span class="n">items</span><span class="p">())</span><span class="o">-</span><span class="mi">1</span>
+<span class="k">print</span><span class="p">(</span><span class="n">nlayers</span><span class="p">)</span> <span class="c1"># 打印一下一共有多少层</span>
+<span class="n">cam_list</span><span class="o">=</span><span class="p">[]</span>
+<span class="c1">#下面我们循环每一层</span>
+
+<span class="k">for</span> <span class="n">layer</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nlayers</span><span class="p">):</span>
+    <span class="c1">#GradCam</span>
+    <span class="n">grad_cam</span> <span class="o">=</span> <span class="n">GradCam</span><span class="p">(</span><span class="n">net</span><span class="p">,</span><span class="n">target_layer</span><span class="o">=</span><span class="n">layer</span><span class="p">)</span>
+    <span class="n">cam</span> <span class="o">=</span> <span class="n">grad_cam</span><span class="o">.</span><span class="n">generate_cam</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="n">label</span><span class="p">)</span>
+
+    <span class="c1">#GuidedBackprop</span>
+    <span class="n">GBP</span> <span class="o">=</span> <span class="n">GuidedBackprop</span><span class="p">(</span><span class="n">net</span><span class="p">)</span>
+    <span class="n">guided_grads</span> <span class="o">=</span> <span class="n">GBP</span><span class="o">.</span><span class="n">generate_gradients</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="n">label</span><span class="p">)</span>
+
+    <span class="c1"># Guided Grad cam</span>
+    <span class="n">cam_gb</span> <span class="o">=</span> <span class="n">guided_grad_cam</span><span class="p">(</span><span class="n">cam</span><span class="p">,</span> <span class="n">guided_grads</span><span class="p">)</span>
+    <span class="n">cam_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">rgb2gray</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">moveaxis</span><span class="p">(</span><span class="n">cam_gb</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">)))</span>
+</pre></div>
+
+<div class="codehilite"><pre><span></span>30
+</pre></div>
+
+
+<p>我们选个图，看看效果：</p>
+<div class="codehilite"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">cam_list</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+</pre></div>
+
+<div class="codehilite"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x23d858b7588&gt;
+</pre></div>
+
+
+<p><img alt="png" src="../img/4_2_3_cnn-visualizing_27_1.png" /></p>
+<p>在 Visualizing and Understanding Convolutional Networks  中作者还给出了其他不同的方法，这里就不详细说明了。</p>
+<p>需要注意的是，在使用 Visualizing and Understanding Convolutional Networks的时候，对网络模型是有要求的，要求网络将模型包含名为features的组合层，这部分是代码中写死的，所以在pytorch的内置模型中，vgg、alexnet、densenet、squeezenet是可以直接使用的，inception(googlenet)和resnet没有名为features的组合层，如果要使用的话是需要对代码进行修改的。</p>
+                
+                  
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid">
+        
+          <a href="../4_2_2_tensorboardx/" title="TensorBoardX" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
+            </div>
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  上一页
+                </span>
+                TensorBoardX
+              </span>
+            </div>
+          </a>
+        
+        
+          <a href="../4_3_multiply-gpu-parallel-training/" title="Parallel" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  下一页
+                </span>
+                Parallel
+              </span>
+            </div>
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+          <div class="md-footer-copyright__highlight">
+            Copyright &copy; 2019 <a href="https://github.com/becauseofAI">becauseofAI</a>, Maintained by the <a href="https://github.com/becauseofAI">becauseofAI</a>.
+          </div>
+        
+        powered by
+        <a href="https://www.mkdocs.org">MkDocs</a>
+        and
+        <a href="https://squidfunk.github.io/mkdocs-material/">
+          Material for MkDocs</a>
+      </div>
+      
+  <div class="md-footer-social">
+    <link rel="stylesheet" href="../../../assets/fonts/font-awesome.css">
+    
+      <a href="https://github.com/becauseofAI" class="md-footer-social__link fa fa-github"></a>
+    
+  </div>
+
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../../../assets/javascripts/application.245445c6.js"></script>
+      
+        
+        
+          
+          <script src="../../../assets/javascripts/lunr/lunr.stemmer.support.js"></script>
+          
+            
+              
+                <script src="../../../assets/javascripts/lunr/tinyseg.js"></script>
+              
+              
+                <script src="../../../assets/javascripts/lunr/lunr.ja.js"></script>
+              
+            
+          
+          
+        
+      
+      <script>app.initialize({version:"1.0.4",url:{base:"../../.."}})</script>
+      
+        <script src="../../../js/extra.js"></script>
+      
+        <script src="../../../js/baidu-tongji.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+      
+    
+  </body>
+</html>

@@ -51,10 +51,48 @@ nav:
     - Introduction: index.md
     - Tutorials:
         - Ghapter01 Getting Started: 
-          - 1.1 PyTorch Tntroduction: chapter01_getting-started/1_1_pytorch-introduction.md
-          - 1.3 PyTorch 60 Minute Blitz: chapter01_getting-started/1_3_deep-learning-with-pytorch-60-minute-blitz.md
+          - 1.1 PyTorch Tntroduction: tutorial/chapter01_getting-started/1_1_pytorch-introduction.md
+          - 1.3 PyTorch 60 Minute Blitz:
+            - 1.3.1 Tensor: tutorial/chapter01_getting-started/1_3_1_tensor_tutorial.md
+            - 1.3.2 Autograd: tutorial/chapter01_getting-started/1_3_2_autograd_tutorial.md
+            - 1.3.3 Neural Networks: tutorial/chapter01_getting-started/1_3_3_neural_networks_tutorial.md
+            - 1.3.4 Classifier: tutorial/chapter01_getting-started/1_3_4_cifar10_tutorial.md
+            - 1.3.5 Data Parallelism: tutorial/chapter01_getting-started/1_3_5_data_parallel_tutorial.md
         - Ghapter02 Basics: 
-          - 2.1 Tensor: chapter02_basics/2_1_pytorch-basics-tensor.md
+          - 2.1 Basic:
+            - 2.1.1 Tensor: tutorial/chapter02_basics/2_1_1_pytorch-basics-tensor.md
+            - 2.1.2 AutoGrad: tutorial/chapter02_basics/2_1_2_pytorch-basics-autograd.md
+            - 2.1.3 Nerual Network: tutorial/chapter02_basics/2_1_3_pytorch-basics-nerual-network.md
+            - 2.1.4 Data Loader: tutorial/chapter02_basics/2_1_4_pytorch-basics-data-loader.md
+          - 2.2 Deep Learning Mathematics Basic: tutorial/chapter02_basics/2_2_deep-learning-mathematics-basic.md
+          - 2.3 Deep Learning Neural Network Introduction: tutorial/chapter02_basics/2_3_deep-learning-neural-network-introduction.md
+          - 2.4 Convolutional Neural Network: tutorial/chapter02_basics/2_4_convolutional-neural-network.md
+          - 2.5 Recurrent Neural Network: tutorial/chapter02_basics/2_5_recurrent-neural-network.md
+        - Ghapter03 Intermediate: 
+          - 3.1 Logistic Regression: tutorial/chapter03_intermediate/3_1_logistic-regression.md
+          - 3.2 CNN:
+            - 3.2.1 ConvNet Mnist: tutorial/chapter03_intermediate/3_2_1_cnn_convnet_mnist.md
+            - 3.2.2 ResNet_Cifar10: tutorial/chapter03_intermediate/3_2_2_cnn_resnet_cifar10.md
+          - 3.3 RNN: tutorial/chapter03_intermediate/3_3_rnn.md
+        - Ghapter04 Advanced: 
+          - 4.1 Fine Tuning: tutorial/chapter04_advanced/4_1_fine-tuning.md
+          - 4.2 Visualization: 
+            - 4.2.1 Visdom: tutorial/chapter04_advanced/4_2_1_visdom.md
+            - 4.2.2 TensorBoardX: tutorial/chapter04_advanced/4_2_2_tensorboardx.md
+            - 4.2.3 CNN Visualizing: tutorial/chapter04_advanced/4_2_3_cnn-visualizing.md
+          - 4.3 Parallel: tutorial/chapter04_advanced/4_3_multiply-gpu-parallel-training.md
+          - 4.4 FastAI: tutorial/chapter04_advanced/4_4_fastai.md
+        - Ghapter05 Application: 
+          - 5.1 Kaggle: tutorial/chapter05_application/5_1_kaggle.md
+          - 5.2 结构化数据: tutorial/chapter05_application/readme.md
+          - 5.3 Computer Vision: 
+            - Detection: tutorial/chapter05_application/readme.md
+            - Segmentation: tutorial/chapter05_application/readme.md
+            - Recognition: tutorial/chapter05_application/readme.md
+            - GAN: tutorial/chapter05_application/readme.md
+            - Others: tutorial/chapter05_application/readme.md
+          - 5.4 自然语言处理: tutorial/chapter05_application/readme.md
+          - 5.5 协同过滤: tutorial/chapter05_application/readme.md
     - About: about.md
         # - Release Notes: about/release-notes.md
         # - Contributing: about/contributing.md
